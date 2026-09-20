@@ -1,0 +1,172 @@
+import Link from "next/link";
+
+export const metadata = {
+  title: "ABOUT | FILEUPLOADER",
+};
+
+export default function About() {
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8 text-slate-800 dark:text-slate-200">
+      <h1 className="text-3xl font-bold mb-6 border-b pb-2 border-slate-300 dark:border-slate-700">
+        About
+      </h1>
+
+      <p className="text-sm leading-relaxed mb-8">
+        本サイトは、各種ファイルを共有・閲覧管理するためのプラットフォームです.
+        利用にあたっては、以下のガイドラインおよび免責事項を必ずご確認ください.
+      </p>
+
+      <hr className="my-6 border-slate-200 dark:border-slate-800" />
+
+      {/* 1. 著作権 */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold mb-3 flex items-center">
+          <span className="mr-2">1.</span> 著作権および知的財産権について
+        </h2>
+        <ul className="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              権利の帰属:
+            </strong>{" "}
+            本サイトに掲載されているすべてのコンテンツ（テキスト、画像、ファイル、および圧縮データを含む）の著作権、その他の知的財産権は、すべて各コンテンツの著作者（権利者）に帰属します．
+          </li>
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              私的利用の範囲内でのダウンロード:
+            </strong>{" "}
+            ユーザーは、著作権法第30条（私的使用のための複製）に基づき、
+            <strong>個人の私的利用の範囲内に限り</strong>
+            、本サイトのコンテンツをダウンロードして使用することが正当に認められます．
+          </li>
+        </ul>
+      </section>
+
+      {/* 2. 二次配布禁止 */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold mb-3 flex items-center">
+          <span className="mr-2">2.</span> 二次配布・転載の厳格な禁止
+        </h2>
+        <div className="bg-red-50 dark:bg-red-950/30 border-l-4 border-red-500 p-4 rounded-r-md">
+          <ul className="list-disc pl-5 space-y-2 text-sm leading-relaxed text-red-900 dark:text-red-200">
+            <li>
+              <strong>二次配布の禁止:</strong>{" "}
+              ダウンロードしたコンテンツ、または本サイト上のデータを、著作者の事前の許可なく第三者へ再配布（二次配布）、共有、転載、または商用利用することは厳格に禁止します．
+            </li>
+            <li>
+              <strong>違反への対処:</strong>{" "}
+              悪質な著作権侵害や利用規約違反が発覚した場合は、プロバイダ責任制限法等に基づき、
+              <strong>法的措置を含めた厳正な対処</strong>を行います．
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* 3. 免責事項 */}
+      <section className="mb-8">
+        <h2 className="text-xl font-bold mb-3 flex items-center">
+          <span className="mr-2">3.</span> 免責事項およびお問い合わせ
+        </h2>
+        <ul className="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              内容の不備について:
+            </strong>{" "}
+            本サイトのコンテンツおよびシステムについては万全を期しておりますが、万が一不備や問題などがございましたら、お手数ですが
+            <Link
+              href="/contact"
+              className="text-indigo-500 hover:underline mx-1 font-semibold"
+            >
+              お問い合わせフォーム
+            </Link>
+            よりご連絡ください．迅速に確認・対応いたします．
+          </li>
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              免責:
+            </strong>{" "}
+            本サイトの利用によって生じた直接的・間接的な損害について、運営者は一切の責任を負いかねますのであらかじめご了承ください．
+          </li>
+        </ul>
+      </section>
+
+      {/* 4. プライバシーポリシー */}
+      <section className="mb-12">
+        <h2 className="text-xl font-bold mb-3 flex items-center">
+          <span className="mr-2">4.</span>{" "}
+          プライバシーポリシー（個人情報の取り扱い）
+        </h2>
+        <ul className="list-disc pl-5 space-y-2 text-sm leading-relaxed">
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              ユーザー情報の非収集:
+            </strong>{" "}
+            本サイトでは、一般的なWebサイトで行われるアクセスログ（Cookie等）の最低限の保持を除き、ユーザーの個人を特定できるような情報の収集・蓄積は原則として行いません．
+          </li>
+          <li>
+            <strong className="text-indigo-600 dark:text-indigo-400">
+              お問い合わせ情報の保護:
+            </strong>{" "}
+            お問い合わせフォームから送信された情報（お名前、メールアドレス、内容など）は、ご質問への回答および本人確認の目的にのみ使用し、適切に管理いたします．
+          </li>
+        </ul>
+      </section>
+
+      <hr className="my-8 border-slate-300 dark:border-slate-700" />
+
+      {/* About Me セクション */}
+      <section className="p-6 rounded-xl border border-slate-200/60 dark:border-slate-800/60 max-w-2xl mx-auto bg-transparent">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+          {/* 丸形アイコン（小さめでシンプルに） */}
+          <div className="flex-shrink-0">
+            <img
+              src="/avatar.jpg"
+              alt="運営者のアイコン"
+              className="w-20 h-20 rounded-full object-cover grayscale-[30%] opacity-90"
+            />
+          </div>
+
+          {/* テキストコンテンツ */}
+          <div className="flex-grow text-center sm:text-left">
+            <div className="mb-2">
+              <h2 className="text-lg font-medium text-slate-700 dark:text-slate-300 inline-block mr-2">
+                唐突に理系
+              </h2>
+              <span className="text-xs text-slate-400 dark:text-slate-500">
+                / 運営・開発
+              </span>
+            </div>
+
+            <div className="text-xs leading-relaxed text-slate-500 dark:text-slate-400 space-y-2">
+              <p>
+                情報系専攻の地方国立大学生．　
+                <br />
+                最近は通信、Web開発に関心が高まる．解析数学が好き．
+                座右の銘は『好きこそものの上手なれ』
+                <br />
+                数理、テクノロジーに関して、LaTeXで自分なりの解説や備忘録、CTFのWriteUpを書いてまとめています．{" "}
+                <br />
+                コンタクトは、お手数ですがお問い合わせフォームよりご連絡ください．
+              </p>
+            </div>
+
+            {/* リンクも目立たないように */}
+            <div className="mt-3 flex justify-center sm:justify-start space-x-3 text-[11px] text-slate-400 dark:text-slate-500">
+              <a
+                href="#"
+                className="hover:text-slate-600 dark:hover:text-slate-300 transition underline underline-offset-2"
+              >
+                GitHub
+              </a>
+              <a
+                href="#"
+                className="hover:text-slate-600 dark:hover:text-slate-300 transition underline underline-offset-2"
+              >
+                Discord
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

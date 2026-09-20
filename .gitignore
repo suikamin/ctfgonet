@@ -1,0 +1,36 @@
+# ディレクトリの最上位にある .gitignore
+
+# 依存ライブラリ（容量削減）
+node_modules/
+**/node_modules/
+
+# Next.jsのビルド成果物（容量削減）
+.next/
+**/.next/
+out/
+
+# ログファイル
+*.log
+logs/
+
+# OSが自動生成するゴミファイル
+.DS_Store
+Thumbs.db
+
+# データベースの実データ（同期・アップロードファイル用）
+db_data/
+public/
+
+# 【超重要】セキュリティ（環境変数ファイルなどをもし使う場合）
+.env
+.env.local
+.env.*.local
+
+# ビルドされた成果物
+*.tar
+*.tar.gz
+
+.venv
+*.py
+
+tree.txt

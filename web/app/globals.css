@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* 1. Tailwind に bg-background や text-foreground というクラスを作らせる設定 */
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+}
+
+/* 2. 変数の値を定義 */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+  }
+}
+
+/* 3. body への適用 */
+body {
+  @apply bg-background text-foreground;
+}

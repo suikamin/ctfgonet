@@ -1,0 +1,13 @@
+services:
+  db:
+    platform: linux/amd64
+  api:
+    platform: linux/amd64
+  web:
+    platform: linux/amd64
+  nginx:
+    platform: linux/amd64
+
+volumes:
+
+networks:

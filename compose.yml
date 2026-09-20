@@ -1,0 +1,68 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: mysql_app
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=ctfgo
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  api:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: runner
+    volumes:
+      - uploaded_files:/app/public/uploads
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DB_HOST=db
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=ctfgo
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+
+  web:
+    restart: always
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      target: runner
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - uploaded_files:/usr/share/nginx/html/public:ro
+    depends_on:
+      - api
+      - web
+    networks:
+      - default
+
+volumes:
+  db_data:
+  uploaded_files:
+
+networks:
+  default:
+    name: ctfgo-network
+    driver: bridge
