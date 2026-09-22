@@ -14,6 +14,7 @@ services:
       - db_data:/var/lib/mysql
 
   api:
+    image: ctfgonet-api:latest
     restart: always
     build:
       context: ./api
@@ -33,6 +34,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
 
   web:
+    image: ctfgonet-web:latest
     restart: always
     build:
       context: ./web
@@ -44,6 +46,7 @@ services:
       - HOSTNAME=0.0.0.0
 
   nginx:
+    image: ctfgonet-nginx:latest
     restart: always
     build:
       context: ./nginx

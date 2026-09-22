@@ -13,7 +13,6 @@ CMD ["npm", "run", "dev"]
 
 # ビルド環境
 FROM base AS builder
-ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci
 COPY . .

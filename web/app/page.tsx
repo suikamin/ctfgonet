@@ -92,77 +92,74 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="w-fit mx-auto mt-40">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            {/* アイコン */}
-            <div className="flex-shrink-0">
-              <Image
-                src="/author_icon.jpg"
-                alt="運営者のアイコン"
-                width={96}
-                height={96}
-                className="w-24 h-24 rounded-full object-cover grayscale-[20%] border-2 border-border"
-              />
-            </div>
-
-            {/* 右側コンテンツ領域 */}
-            <div className="flex-grow space-y-4">
-              {/* 1. 名前と説明文を横並びにするエリア */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-center sm:text-left">
-                {/* 名前・肩書 */}
-                <div className="flex-shrink-0">
-                  <span className="text-xs font-mono tracking-wider opacity-60 uppercase block mb-1">
-                    About Author
-                  </span>
-                  <h2 className="text-2xl font-bold inline-block mr-2">
-                    二個で百円
-                  </h2>
-                  <span className="text-xs opacity-60">/ 運営・開発</span>
-                </div>
+        <div className="w-full mt-32 border-t border-border/30 pt-12 pb-16 opacity-75 hover:opacity-100 transition-opacity">
+          <div className="max-w-3xl mx-auto px-4">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              {/* アイコン */}
+              <div className="flex-shrink-0">
+                <Image
+                  src="/author_icon.jpg"
+                  alt="運営者のアイコン"
+                  width={80}
+                  height={80}
+                  className="w-20 h-20 rounded-full object-cover grayscale-[30%] border border-border"
+                />
               </div>
 
-              {/* 2. リンク類（そのまま下に配置） */}
-              <div className="pt-2 flex justify-center sm:justify-start gap-4 text-xs font-medium">
-                <a
-                  href="https://github.com/suikamin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition underline underline-offset-4"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://github.com/suikamin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition underline underline-offset-4"
-                >
-                  X (旧Twitter)
-                </a>
-                <a
-                  href="https://github.com/suikamin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition underline underline-offset-4"
-                >
-                  YouTube
-                </a>
-                <a
-                  href="https://github.com/suikamin/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition underline underline-offset-4"
-                >
-                  Discord
-                </a>
-                <Link
-                  href={"/about"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-70 transition underline underline-offset-4"
-                >
-                  More about me
-                </Link>
+              {/* 右側コンテンツ領域 */}
+              <div className="flex-grow space-y-3 text-center sm:text-left">
+                {/* 名前・肩書 */}
+                <div>
+                  <span className="text-[10px] font-mono tracking-widest opacity-50 uppercase block mb-0.5">
+                    About Author
+                  </span>
+                  <h2 className="text-xl font-bold inline-block mr-2 text-foreground/90">
+                    二個で百円
+                  </h2>
+                  <span className="text-xs opacity-50">/ 運営・開発</span>
+                </div>
+
+                {/* 2. リンク類 */}
+                <div className="pt-1 flex flex-wrap justify-center sm:justify-start gap-4 text-xs font-medium opacity-80">
+                  <a
+                    href="https://github.com/suikamin/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-100 transition underline underline-offset-4"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="https://github.com/suikamin/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-100 transition underline underline-offset-4"
+                  >
+                    X (旧Twitter)
+                  </a>
+                  <a
+                    href="https://github.com/suikamin/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-100 transition underline underline-offset-4"
+                  >
+                    YouTube
+                  </a>
+                  <a
+                    href="https://github.com/suikamin/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:opacity-100 transition underline underline-offset-4"
+                  >
+                    Discord
+                  </a>
+                  <Link
+                    href={"/about"}
+                    className="hover:opacity-100 transition underline underline-offset-4"
+                  >
+                    More about me
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

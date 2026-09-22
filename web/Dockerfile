@@ -14,7 +14,6 @@ CMD ["npm", "run", "dev"]
 
 # ビルド
 FROM base AS builder
-ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci
 COPY . .

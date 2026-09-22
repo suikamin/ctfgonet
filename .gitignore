@@ -29,5 +29,6 @@ public/
 # ビルドされた成果物
 *.tar
 *.tar.gz
+*.zip
 
 .venv
