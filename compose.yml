@@ -50,8 +50,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
-    volumes:
-      - uploaded_files:/usr/share/nginx/html/public:ro
     depends_on:
       - api
       - web

@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <div className="max-w-6xl mx-auto flex justify-between items-center w-full">
       <Link href="/" className="font-bold text-xl tracking-tight">
-        FILE-UPLOADER
+        CTFで学ぶWeb
       </Link>
 
       <div className="flex items-center gap-4">

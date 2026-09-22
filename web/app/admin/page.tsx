@@ -10,6 +10,7 @@ interface Document {
   tags: string;
   extension: string; // 拡張子プロパティを追加
   comment: string;
+  filepass: string;
 }
 
 export default function AdminPage() {
@@ -23,6 +24,7 @@ export default function AdminPage() {
   const [tags, setTags] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [comment, setComment] = useState("");
+  const [filepass, setPass] = useState("");
 
   const [docs, setDocs] = useState<Document[]>([]);
   const [msg, setMsg] = useState("");
@@ -83,6 +85,7 @@ export default function AdminPage() {
     formData.append("tags", tags);
     formData.append("file", file);
     formData.append("comment", comment);
+    formData.append("filepass", filepass);
 
     // アップロード時にクッキー（認証トークン）を含める
     const res = await fetch("/api/upload", {
@@ -97,6 +100,7 @@ export default function AdminPage() {
       setTags("");
       setFile(null);
       setComment("");
+      setPass("");
       fetchDocs();
     } else {
       setMsg("アップロード中にエラーが発生しました。");
@@ -224,6 +228,19 @@ export default function AdminPage() {
               onChange={(e) => setTags(e.target.value)}
               className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
               placeholder="React, Design"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold mb-1">
+              ファイルパスワード設定
+            </label>
+            <input
+              type="text"
+              value={filepass}
+              onChange={(e) => setPass(e.target.value)}
+              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              placeholder="password"
             />
           </div>
 

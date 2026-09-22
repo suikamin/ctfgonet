@@ -52,7 +52,8 @@ async function initDB(maxRetries = 10, delayMs = 3000) {
                     tags VARCHAR(255) NOT NULL,
                     extension VARCHAR(10) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    comment VARCHAR(511) NOT NULL
+                    comment VARCHAR(511) NOT NULL,
+                    password VARCHAR(255) NOT NULL
                 )
             `);
         console.log("[DB] Successed to initiallize Database");
@@ -76,7 +77,7 @@ async function initDB(maxRetries = 10, delayMs = 3000) {
 }
 initDB();
 
-const uploadDir = "/app/public";
+const uploadDir = "/app/public/uploads";
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -151,13 +152,15 @@ app.get("/auth/check", authenticateToken, (req: Request, res: Response) => {
 app.get("/documents", async (req: Request, res: Response) => {
   const search = req.query.search as string;
   try {
-    let query = "SELECT * FROM documents";
+    // password カラムは除外して取得する
+    let query =
+      "SELECT uuid, title, tags, extension, created_at, comment, (password != '') AS isProtected FROM documents";
     let params: any[] = [];
 
     if (search) {
-      query += " WHERE title LIKE ? OR tags LIKE ?";
+      query += " WHERE title LIKE ? OR tags LIKE ? OR extension LIKE ?";
       const searchParam = `%${search}%`;
-      params = [searchParam, searchParam];
+      params = [searchParam, searchParam, searchParam];
     }
 
     query += " ORDER BY created_at DESC";
@@ -169,13 +172,77 @@ app.get("/documents", async (req: Request, res: Response) => {
   }
 });
 
+// ファイルダウンロード要求 (POST /download)
+app.post("/download", async (req: Request, res: Response) => {
+  const { uuid, password } = req.body;
+
+  if (!uuid) {
+    res.status(400).json({ error: "UUID is required" });
+    return;
+  }
+
+  try {
+    // 1. DBから対象のドキュメント情報を取得
+    const [rows]: any = await pool.query(
+      "SELECT * FROM documents WHERE uuid = ?",
+      [uuid],
+    );
+
+    if (rows.length === 0) {
+      res
+        .status(404)
+        .json({ error: "指定されたドキュメントが見つかりません。" });
+      return;
+    }
+
+    const doc = rows[0];
+
+    // 2. パスワード保護されている場合の照合処理
+    if (doc.password && doc.password.trim() !== "") {
+      const userInputPassword = password || "";
+
+      // bcryptで入力パスワードとDBのハッシュ値を検証
+      const isMatch = await bcrypt.compare(userInputPassword, doc.password);
+
+      if (!isMatch) {
+        res.status(401).json({ error: "パスワードが正しくありません。" });
+        return;
+      }
+    }
+
+    // 3. ファイルパスの作成と存在チェック
+    const filePath = path.join(uploadDir, `${doc.uuid}${doc.extension}`);
+
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ error: "サーバー上にファイルが存在しません。" });
+      return;
+    }
+
+    // 4. ファイル本体をダウンロードレスポンスとして送信
+    // 第2引数で「タイトル + 拡張子」のファイル名を指定します
+    const downloadFileName = `${doc.title}${doc.extension}`;
+
+    res.download(filePath, downloadFileName, (err) => {
+      if (err && !res.headersSent) {
+        console.error("File download error:", err);
+        res
+          .status(500)
+          .json({ error: "ファイルのダウンロードに失敗しました。" });
+      }
+    });
+  } catch (err: any) {
+    console.error("Download endpoint error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 5. ファイルアップロード (拡張子をDBに保存)
 app.post(
   "/upload",
   authenticateToken,
   upload.single("file"),
   async (req: Request, res: Response) => {
-    const { title, tags, comment } = req.body;
+    const { title, tags, comment, filepass } = req.body;
     if (!req.file) {
       res.status(400).json({ error: "File is required" });
       return;
@@ -198,10 +265,15 @@ app.post(
       path.extname(req.file.filename),
     );
 
+    let hashedPass = "";
+    if (filepass && filepass.trim() !== "") {
+      hashedPass = await bcrypt.hash(filepass, 10);
+    }
+
     try {
       await pool.query(
-        "INSERT INTO documents (uuid, title, tags, extension, comment) VALUES (?, ?, ?, ?, ?)",
-        [uuid, title, tags || "", ext, comment || ""],
+        "INSERT INTO documents (uuid, title, tags, extension, comment, password) VALUES (?, ?, ?, ?, ?, ?)",
+        [uuid, title, tags || "", ext, comment || "", hashedPass || ""],
       );
       res.json({ success: true, uuid, extension: ext });
     } catch (err: any) {
