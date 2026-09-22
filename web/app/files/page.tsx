@@ -11,7 +11,7 @@ import {
   FileCode,
   File,
 } from "lucide-react";
-import FileModal from "../components/FileModal"; // モーダルのインポート
+import FileModal from "../components/FileModal";
 
 interface Document {
   uuid: string;
@@ -51,14 +51,8 @@ const getFileIcon = (extension: string) => {
 export default function FileStream() {
   const [docs, setDocs] = useState<Document[]>([]);
   const [search, setSearch] = useState("");
-
-  // ポップアップ開閉のためのステート管理
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
 
-  const styletemp: string =
-    "items-center justify-center gap-2 group-hover:bg-indigo-50 dark:group-hover:bg-indigo-950/30 transition-colors";
-
-  // Expressバックエンドの GET /documents APIを呼び出し
   const fetchDocs = async (query = "") => {
     try {
       const res = await fetch(
@@ -83,7 +77,7 @@ export default function FileStream() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-foreground">
       {/* 検索セクション */}
       <form
         onSubmit={handleSearch}
@@ -95,16 +89,13 @@ export default function FileStream() {
             placeholder="検索..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full pl-10 pr-4 py-2 border rounded-md bg-background border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-foreground/50"
           />
-          <Search
-            className="absolute left-3 top-2.5 text-slate-400"
-            size={16}
-          />
+          <Search className="absolute left-3 top-2.5 opacity-50" size={16} />
         </div>
         <button
           type="submit"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+          className="bg-foreground text-background hover:opacity-90 px-4 py-2 rounded-md text-sm transition-opacity"
         >
           検索
         </button>
@@ -112,7 +103,7 @@ export default function FileStream() {
 
       {/* ドキュメントグリッド */}
       {docs.length === 0 ? (
-        <p className="text-center text-slate-400 py-12">
+        <p className="text-center opacity-50 py-12">
           該当するファイルが見つかりません。
         </p>
       ) : (
@@ -120,31 +111,20 @@ export default function FileStream() {
           {docs.map((doc) => (
             <div
               key={doc.uuid}
-              // 直リンク遷移から「ステートにセットしてポップアップを起動する」挙動に変更
               onClick={() => setSelectedDoc(doc)}
-              className="group cursor-pointer border border-slate-200 dark:border-slate-800 rounded-lg p-4 bg-white dark:bg-slate-900/50 hover:shadow-md hover:border-indigo-500 transition-all flex flex-col justify-between h-52"
+              className="group cursor-pointer border border-border rounded-lg p-4 bg-background hover:shadow-md hover:border-foreground/50 transition-all flex flex-col justify-between h-52"
             >
               {/* プレースホルダーアイコン */}
-              <div
-                className={`${
-                  [".png", ".jpg", ".jpeg", ".gif", ".ico"].includes(
-                    doc.extension.toLowerCase(),
-                  )
-                    ? `bg-green-50 dark:bg-green-950/30 text-green-500 ${styletemp}`
-                    : doc.extension.toLowerCase() === ".pdf"
-                      ? `bg-red-50 dark:bg-red-950/30 text-red-500 ${styletemp}`
-                      : `bg-slate-100 dark:bg-slate-800 text-slate-500 ${styletemp}`
-                }`}
-              >
+              <div className="bg-foreground/5 text-foreground items-center justify-center gap-2 transition-colors flex flex-col rounded">
                 {getFileIcon(doc.extension)}
-                <span className="flex text-[10px] justify-center items-center uppercase font-mono tracking-wider text-slate-400 h-8">
+                <span className="flex text-[10px] justify-center items-center uppercase font-mono tracking-wider opacity-60 h-8">
                   {doc.extension}
                 </span>
               </div>
 
               {/* 情報領域 */}
               <div className="mt-2 space-y-1">
-                <h3 className="font-semibold text-sm line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <h3 className="font-semibold text-sm line-clamp-1 group-hover:opacity-80 transition-opacity">
                   {doc.title}
                 </h3>
                 <div className="flex flex-wrap gap-1">
@@ -153,7 +133,7 @@ export default function FileStream() {
                       tag.trim() && (
                         <span
                           key={idx}
-                          className="text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-500 dark:text-slate-400"
+                          className="text-[10px] bg-foreground/10 px-1.5 py-0.5 rounded opacity-80"
                         >
                           #{tag.trim()}
                         </span>
@@ -166,7 +146,7 @@ export default function FileStream() {
         </div>
       )}
 
-      {/* ポップアップコンポーネントの設置 */}
+      {/* ポップアップコンポーネント */}
       <FileModal doc={selectedDoc} onClose={() => setSelectedDoc(null)} />
     </div>
   );

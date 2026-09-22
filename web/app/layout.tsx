@@ -1,7 +1,14 @@
 import "@/app/globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { icons } from "lucide-react";
+import { Zen_Kaku_Gothic_New } from "next/font/google";
+
+const zenKaku = Zen_Kaku_Gothic_New({
+  weight: ["500", "700"],
+  subsets: ["latin"],
+  preload: false,
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -10,8 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" className="dark">
-      <body className="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 flex h-screen flex-col min-h-screen transition-colors duration-200">
-        <div className="border-b border-slate-200 dark:border-slate-800 p-4 sticky top-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-50 flex-shrink-0">
+      <body
+        className={`${zenKaku.className} bg-background text-foreground flex h-screen flex-col min-h-screen transition-colors duration-200`}
+      >
+        {/* ヘッダー外枠：テーマ変数と不透明度でバックドロップブラーを適用 */}
+        <div className="border-b border-border p-4 sticky top-0 bg-background/80 backdrop-blur-md z-50 flex-shrink-0">
           <Header />
         </div>
 

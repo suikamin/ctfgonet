@@ -1,44 +1,43 @@
-import Image from "next/image";
+// components/Footer.tsx
+import Link from "next/link";
+
 export default function Footer() {
-  // 自動で現在の西暦（2026年など）を取得して表示に利用します
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-gray-200 bg-white py-3 dark:border-gray-800 dark:bg-gray-950">
+    <footer className="w-full border-t border-border bg-background py-4 text-foreground">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-          {/* 左側：著作権表記 */}
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm opacity-70">
             &copy; {currentYear} Site Administrator. All rights reserved.
           </p>
 
-          {/* 各種リンク */}
-          <div className="flex text-sm text-gray-500 dark:text-gray-400 divide-x divide-gray-400">
-            <a
+          <div className="flex text-sm opacity-70 divide-x divide-border">
+            <Link
               href="/"
-              className="hover:text-gray-900 dark:hover:text-white transition-colors pr-5"
+              className="hover:opacity-100 transition-opacity pr-5"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="/about"
-              className="hover:text-gray-900 dark:hover:text-white transition-colors px-5"
+              className="hover:opacity-100 transition-opacity px-5"
             >
               About
-            </a>
+            </Link>
             <a
               href="/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-900 dark:hover:text-white transition-colors px-5"
+              className="hover:opacity-100 transition-opacity px-5"
             >
               Contact
             </a>
             <a
-              href="https://github.com/suikamin"
+              href="https://github.com/suikamin/ctfgonet"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center hover:text-gray-900 dark:hover:text-white transition-colors pl-5"
+              className="hover:opacity-100 transition-opacity pl-5"
             >
               GitHub
             </a>

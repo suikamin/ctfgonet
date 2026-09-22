@@ -9,10 +9,10 @@ export default function RedirectPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
       <div className="text-center">
-        {/* 一瞬だけ画面が表示される可能性があるため、不自然じゃないローディングを置いておく */}
-        <p className="text-sm text-slate-500 dark:text-slate-400 animate-pulse">
+        {/* リダイレクト中のローディング表示 */}
+        <p className="text-sm opacity-60 animate-pulse">
           リダイレクトしています。少々お待ちください...
         </p>
       </div>

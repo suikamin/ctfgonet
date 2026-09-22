@@ -8,7 +8,7 @@ interface Document {
   uuid: string;
   title: string;
   tags: string;
-  extension: string; // 拡張子プロパティを追加
+  extension: string;
   comment: string;
   filepass: string;
 }
@@ -43,7 +43,6 @@ export default function AdminPage() {
 
   const fetchDocs = async () => {
     try {
-      // 一覧取得時にクッキーを含める
       const res = await fetch("/api/documents", { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
@@ -56,7 +55,6 @@ export default function AdminPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // ログイン応答の Set-Cookie を受け取るため credentials を指定
     const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -87,7 +85,6 @@ export default function AdminPage() {
     formData.append("comment", comment);
     formData.append("filepass", filepass);
 
-    // アップロード時にクッキー（認証トークン）を含める
     const res = await fetch("/api/upload", {
       method: "POST",
       body: formData,
@@ -114,7 +111,6 @@ export default function AdminPage() {
     if (!confirmed) return;
 
     try {
-      // 削除リクエスト時にクッキーを含める
       const res = await fetch(`/api/documents/${uuid}`, {
         method: "DELETE",
         credentials: "include",
@@ -140,37 +136,37 @@ export default function AdminPage() {
 
   if (!auth) {
     return (
-      <div className="max-w-md mx-auto mt-12 border border-slate-200 dark:border-slate-800 rounded-lg p-6 bg-white dark:bg-slate-900 shadow-sm">
+      <div className="max-w-md mx-auto mt-12 border border-border rounded-lg p-6 bg-background text-foreground shadow-sm">
         <h2 className="text-xl font-bold mb-4 text-center">管理者ログイン</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-1">
+            <label className="block text-xs font-semibold mb-1 opacity-80">
               ユーザー名
             </label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               required
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1">
+            <label className="block text-xs font-semibold mb-1 opacity-80">
               パスワード
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               required
             />
           </div>
           {msg && <p className="text-xs text-red-500 font-medium">{msg}</p>}
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded text-sm transition-colors"
+            className="w-full bg-foreground text-background font-medium py-2 rounded text-sm hover:opacity-90 transition-opacity cursor-pointer"
           >
             ログイン
           </button>
@@ -180,95 +176,101 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-2xl mx-auto space-y-8 text-foreground">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">管理者用ドキュメント管理</h2>
         <button
           onClick={handleLogout}
-          className="text-xs border border-red-500 text-red-500 hover:bg-red-500/10 px-3 py-1.5 rounded transition-colors"
+          className="text-xs border border-red-500 text-red-500 hover:bg-red-500/10 px-3 py-1.5 rounded transition-colors cursor-pointer"
         >
           ログアウト
         </button>
       </div>
 
       {msg && (
-        <div className="p-3 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 rounded text-xs font-medium border border-indigo-100 dark:border-indigo-900">
+        <div className="p-3 bg-foreground/5 text-foreground rounded text-xs font-medium border border-border">
           {msg}
         </div>
       )}
 
       <form
         onSubmit={handleUpload}
-        className="border border-slate-200 dark:border-slate-800 rounded-lg p-6 bg-white dark:bg-slate-900 space-y-4 shadow-sm"
+        className="border border-border rounded-lg p-6 bg-background space-y-4 shadow-sm"
       >
-        <h3 className="font-semibold text-sm border-b pb-2 border-slate-200 dark:border-slate-800">
+        <h3 className="font-semibold text-sm border-b pb-2 border-border">
           新規ファイルのアップロード
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold mb-1">タイトル</label>
+            <label className="block text-xs font-semibold mb-1 opacity-80">
+              タイトル
+            </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               placeholder="作品または資料のタイトル"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1">
+            <label className="block text-xs font-semibold mb-1 opacity-80">
               タグ (カンマ区切り)
             </label>
             <input
               type="text"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               placeholder="React, Design"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold mb-1">
+            <label className="block text-xs font-semibold mb-1 opacity-80">
               ファイルパスワード設定
             </label>
             <input
               type="text"
               value={filepass}
               onChange={(e) => setPass(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               placeholder="password"
             />
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-xs font-semibold mb-1">コメント</label>
+            <label className="block text-xs font-semibold mb-1 opacity-80">
+              コメント
+            </label>
             <textarea
               rows={3}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              className="w-full border rounded p-2 text-sm bg-transparent border-slate-300 dark:border-slate-700"
+              className="w-full border rounded p-2 text-sm bg-background border-border focus:outline-none focus:ring-2 focus:ring-foreground/50"
               placeholder="一言コメント"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1">ファイル</label>
+          <label className="block text-xs font-semibold mb-1 opacity-80">
+            ファイル
+          </label>
           <input
             type="file"
             onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-            className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 dark:file:bg-slate-800 dark:file:text-slate-200 hover:file:bg-indigo-100 cursor-pointer"
+            className="w-full text-sm opacity-80 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-foreground/10 file:text-foreground hover:file:bg-foreground/20 cursor-pointer"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded text-sm transition-colors"
+          className="w-full bg-foreground text-background font-medium py-2 rounded text-sm hover:opacity-90 transition-opacity cursor-pointer"
         >
           アップロードを実行
         </button>
@@ -278,26 +280,24 @@ export default function AdminPage() {
         <h3 className="font-semibold text-sm pl-1">
           アップロード済みファイル一覧 ({docs.length}件)
         </h3>
-        <div className="border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden bg-white dark:bg-slate-900 shadow-sm divide-y divide-slate-200 dark:divide-slate-800">
+        <div className="border border-border rounded-lg overflow-hidden bg-background shadow-sm divide-y divide-border">
           {docs.length === 0 ? (
-            <p className="text-center text-slate-400 py-8 text-sm">
+            <p className="text-center opacity-50 py-8 text-sm">
               ファイルがありません。
             </p>
           ) : (
             docs.map((doc) => (
               <div
                 key={doc.uuid}
-                className="flex items-center justify-between p-3 sm:px-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                className="flex items-center justify-between p-3 sm:px-4 hover:bg-foreground/5 transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0 flex-1 mr-4">
-                  <div className="p-2 rounded">
+                  <div className="p-2 bg-foreground/10 rounded">
                     <FileText size={18} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">
-                      {doc.title}
-                    </p>
-                    <p className="text-[10px] font-mono text-slate-400 truncate">
+                    <p className="text-sm font-medium truncate">{doc.title}</p>
+                    <p className="text-[10px] font-mono opacity-50 truncate">
                       {doc.uuid}
                       {doc.extension}
                     </p>
@@ -306,7 +306,7 @@ export default function AdminPage() {
 
                 <button
                   onClick={() => handleDelete(doc.uuid, doc.title)}
-                  className="p-2 text-slate-400 hover:text-red-500 dark:hover:text-red-400 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex-shrink-0"
+                  className="p-2 opacity-60 hover:opacity-100 text-red-500 rounded-md hover:bg-red-500/10 transition-all flex-shrink-0 cursor-pointer"
                   title="ファイルを削除"
                 >
                   <Trash2 size={16} />
