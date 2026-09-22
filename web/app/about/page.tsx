@@ -125,35 +125,56 @@ export default function About() {
           <div className="flex-grow text-center sm:text-left">
             <div className="mb-2">
               <h2 className="text-lg font-medium inline-block mr-2">
-                唐突に理系
+                二個で百円
               </h2>
               <span className="text-xs opacity-60">/ 運営・開発</span>
             </div>
 
             <div className="text-xs leading-relaxed opacity-80 space-y-2">
               <p>
-                情報系専攻の地方国立大学生．
+                地方国立大学生。工学部情報系専攻。
                 <br />
-                最近は通信、Web開発に関心が高まる．解析数学が好き．
-                座右の銘は『好きこそものの上手なれ』
+                情報数学がメイン。最近は通信・Web開発に関心が高まる。
                 <br />
-                数理、テクノロジーに関して、LaTeXで自分なりの解説や備忘録、CTFのWriteUpを書いてまとめています．{" "}
+                座右の銘は、「好きこそものの上手なれ」
                 <br />
-                コンタクトは、お手数ですがお問い合わせフォームよりご連絡ください．
+                数理、テクノロジーに関して、記事、備忘録、CTFのWriteUpを書いてまとめています。{" "}
+                <br />
+                コンタクトは、各種SNSまたは、ContactよりGoogleFormにお願いします。
               </p>
             </div>
 
             {/* リンク */}
-            <div className="mt-3 flex justify-center sm:justify-start space-x-3 text-[11px] opacity-60">
+            <div className="pt-2 flex justify-center sm:justify-start gap-4 text-xs font-medium">
               <a
-                href="#"
-                className="hover:opacity-100 transition underline underline-offset-2"
+                href="https://github.com/suikamin/ctfgonet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition underline underline-offset-4"
               >
                 GitHub
               </a>
               <a
-                href="#"
-                className="hover:opacity-100 transition underline underline-offset-2"
+                href="https://github.com/suikamin/ctfgonet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition underline underline-offset-4"
+              >
+                X (旧Twitter)
+              </a>
+              <a
+                href="https://github.com/suikamin/ctfgonet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition underline underline-offset-4"
+              >
+                YouTube
+              </a>
+              <a
+                href="https://github.com/suikamin/ctfgonet"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-70 transition underline underline-offset-4"
               >
                 Discord
               </a>
