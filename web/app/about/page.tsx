@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "ABOUT | FILEUPLOADER",
@@ -114,9 +115,11 @@ export default function About() {
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           {/* 丸形アイコン */}
           <div className="flex-shrink-0">
-            <img
-              src="/avatar.jpg"
+            <Image
+              src="/author_icon.jpg"
               alt="運営者のアイコン"
+              width={96}
+              height={96}
               className="w-20 h-20 rounded-full object-cover grayscale-[30%] opacity-90"
             />
           </div>
@@ -147,7 +150,7 @@ export default function About() {
             {/* リンク */}
             <div className="pt-2 flex justify-center sm:justify-start gap-4 text-xs font-medium">
               <a
-                href="https://github.com/suikamin/ctfgonet"
+                href="https://github.com/suikamin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
@@ -155,7 +158,7 @@ export default function About() {
                 GitHub
               </a>
               <a
-                href="https://github.com/suikamin/ctfgonet"
+                href="https://github.com/suikamin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
@@ -163,7 +166,7 @@ export default function About() {
                 X (旧Twitter)
               </a>
               <a
-                href="https://github.com/suikamin/ctfgonet"
+                href="https://github.com/suikamin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
@@ -171,7 +174,7 @@ export default function About() {
                 YouTube
               </a>
               <a
-                href="https://github.com/suikamin/ctfgonet"
+                href="https://github.com/suikamin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"

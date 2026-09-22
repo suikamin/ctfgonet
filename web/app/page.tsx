@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -59,7 +60,7 @@ export default function HomePage() {
       </section>
 
       {/* 2. What's New セクション（準備中UI） */}
-      <section className="min-h-[calc(100vh-10rem)] flex flex-col justify-center items-center px-4 snap-start">
+      <section className="min-h-[calc(100vh-10rem)] flex flex-col items-center px-4 snap-start">
         <div className="w-full max-w-3xl">
           <div className="text-center mb-8">
             <span className="text-xs font-mono tracking-wider opacity-60 uppercase block mb-1">
@@ -90,46 +91,40 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* 3. About me セクション */}
-      <section className="min-h-[calc(100vh-10rem)] flex flex-col justify-end items-center px-4 snap-start">
-        <div className="w-full max-w-3xl bg-foreground/5 p-8 md:p-10 rounded-2xl border border-border shadow-sm">
+        <div className="w-fit mx-auto mt-40">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            {/* アイコン */}
             <div className="flex-shrink-0">
-              <img
-                src="/avatar.jpg"
+              <Image
+                src="/author_icon.jpg"
                 alt="運営者のアイコン"
+                width={96}
+                height={96}
                 className="w-24 h-24 rounded-full object-cover grayscale-[20%] border-2 border-border"
               />
             </div>
 
-            <div className="flex-grow text-center sm:text-left space-y-3">
-              <div>
-                <span className="text-xs font-mono tracking-wider opacity-60 uppercase block mb-1">
-                  About Author
-                </span>
-                <h2 className="text-2xl font-bold inline-block mr-2">
-                  二個で百円
-                </h2>
-                <span className="text-xs opacity-60">/ 運営・開発</span>
+            {/* 右側コンテンツ領域 */}
+            <div className="flex-grow space-y-4">
+              {/* 1. 名前と説明文を横並びにするエリア */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-center sm:text-left">
+                {/* 名前・肩書 */}
+                <div className="flex-shrink-0">
+                  <span className="text-xs font-mono tracking-wider opacity-60 uppercase block mb-1">
+                    About Author
+                  </span>
+                  <h2 className="text-2xl font-bold inline-block mr-2">
+                    二個で百円
+                  </h2>
+                  <span className="text-xs opacity-60">/ 運営・開発</span>
+                </div>
               </div>
 
-              <p className="text-xs md:text-sm leading-relaxed opacity-80">
-                地方国立大学生。工学部情報系専攻。
-                <br />
-                情報数学がメイン。最近は通信・Web開発に関心が高まる。
-                <br />
-                座右の銘は、「好きこそものの上手なれ」
-                <br />
-                数理、テクノロジーに関して、記事、備忘録、CTFのWriteUpを書いてまとめています。{" "}
-                <br />
-                コンタクトは、各種SNSまたは、ContactよりGoogleFormにお願いします。
-              </p>
-
+              {/* 2. リンク類（そのまま下に配置） */}
               <div className="pt-2 flex justify-center sm:justify-start gap-4 text-xs font-medium">
                 <a
-                  href="https://github.com/suikamin/ctfgonet"
+                  href="https://github.com/suikamin/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:opacity-70 transition underline underline-offset-4"
@@ -137,7 +132,7 @@ export default function HomePage() {
                   GitHub
                 </a>
                 <a
-                  href="https://github.com/suikamin/ctfgonet"
+                  href="https://github.com/suikamin/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:opacity-70 transition underline underline-offset-4"
@@ -145,7 +140,7 @@ export default function HomePage() {
                   X (旧Twitter)
                 </a>
                 <a
-                  href="https://github.com/suikamin/ctfgonet"
+                  href="https://github.com/suikamin/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:opacity-70 transition underline underline-offset-4"
@@ -153,13 +148,21 @@ export default function HomePage() {
                   YouTube
                 </a>
                 <a
-                  href="https://github.com/suikamin/ctfgonet"
+                  href="https://github.com/suikamin/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:opacity-70 transition underline underline-offset-4"
                 >
                   Discord
                 </a>
+                <Link
+                  href={"/about"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-70 transition underline underline-offset-4"
+                >
+                  More about me
+                </Link>
               </div>
             </div>
           </div>
