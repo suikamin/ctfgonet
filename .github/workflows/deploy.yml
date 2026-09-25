@@ -67,7 +67,16 @@ jobs:
             --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
           envs: ENV_FILE,API_IMAGE,WEB_IMAGE,NGINX_IMAGE
           script: |
+            mkdir -p ~/server/ctfgonet
             cd ~/server/ctfgonet
+            
+            if [ -d .git ]; then
+              git fetch origin main
+              git reset --hard origin/main
+            else
+              git clone https://github.com/${{ github.repository }}.git .
+            fi
+            
             echo "$ENV_FILE" > .env
             echo "API_IMAGE=$API_IMAGE" >> .env
             echo "WEB_IMAGE=$WEB_IMAGE" >> .env

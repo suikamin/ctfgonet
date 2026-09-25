@@ -26,7 +26,7 @@ export default function HomePage() {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
             Webについて、
             <br className="hidden sm:inline" />
-            <span className="opacity-90">CTFで、</span>勉強する。
+            <span className="opacity-90">CTFで、</span>勉強しよう！
           </h1>
 
           <p className="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">
