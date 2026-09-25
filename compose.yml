@@ -14,7 +14,7 @@ services:
       - db_data:/var/lib/mysql
 
   api:
-    image: ${API_IMAGE:-ctfgonet-api:ctfgonet-api:latest}
+    image: ${API_IMAGE:-ctfgonet-api:latest}
     restart: always
     build:
       context: ./api

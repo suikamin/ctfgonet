@@ -61,9 +61,9 @@ jobs:
           CF_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
           CF_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
           ENV_FILE: ${{ secrets.ENV_FILE }}
-          IMAGE_API: ${{ env.IMAGE_API }}
-          IMAGE_WEB: ${{ env.IMAGE_WEB }}
-          IMAGE_NGINX: ${{ env.IMAGE_NGINX }}
+          IMAGE_API: ${{ env.API_IMAGE }}
+          IMAGE_WEB: ${{ env.WEB_IMAGE }}
+          IMAGE_NGINX: ${{ env.NGINX_IMAGE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_NAME: ${{ github.repository }}
           ACTOR: ${{ github.actor }}
