@@ -68,7 +68,11 @@ jobs:
           REPO_NAME: ${{ github.repository }}
           ACTOR: ${{ github.actor }}
         run: |
-          # SSH 秘密鍵と Config の作成
+          if [ -z "$CF_CLIENT_ID" ] || [ -z "$CF_CLIENT_SECRET" ]; then
+            echo "::error::CF_ACCESS_CLIENT_ID または CF_ACCESS_CLIENT_SECRET が設定されていません。"
+            exit 1
+          fi
+
           mkdir -p ~/.ssh
           echo "$VPS_SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
@@ -79,19 +83,17 @@ jobs:
             User $VPS_USER
             Port $VPS_PORT
             IdentityFile ~/.ssh/id_rsa
-            ProxyCommand cloudflared access ssh --hostname %h --id $CF_CLIENT_ID --secret $CF_CLIENT_SECRET
+            IdentitiesOnly yes
+            ProxyCommand cloudflared access ssh --hostname %h --id "$CF_CLIENT_ID" --secret "$CF_CLIENT_SECRET"
             StrictHostKeyChecking no
           EOF
 
-          # .env の改行くずれを防ぐため Base64 化
           ENV_BASE64=$(echo "$ENV_FILE" | base64 -w 0)
 
-          # VPS へ SSH 接続してコマンド実行
           ssh vps << EOF
             mkdir -p ~/server/ctfgonet
             cd ~/server/ctfgonet
 
-            # リポジトリの最新化
             if [ -d .git ]; then
               git fetch origin main
               git reset --hard origin/main
@@ -99,13 +101,11 @@ jobs:
               git clone https://github.com/$REPO_NAME.git .
             fi
 
-            # .env の書き出し
             echo "$ENV_BASE64" | base64 -d > .env
             echo "API_IMAGE=$IMAGE_API" >> .env
             echo "WEB_IMAGE=$IMAGE_WEB" >> .env
             echo "NGINX_IMAGE=$IMAGE_NGINX" >> .env
 
-            # GHCR ログイン＆再起動
             echo "$GITHUB_TOKEN" | docker login ghcr.io -u $ACTOR --password-stdin
             docker compose -f compose.yml -f compose.prod.yml pull
             docker compose -f compose.yml -f compose.prod.yml up -d --remove-orphans
