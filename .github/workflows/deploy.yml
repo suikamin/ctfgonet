@@ -44,46 +44,70 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. cloudflared バイナリのインストール（数秒で終わります）
+      # 1. cloudflared のインストール
       - name: Install cloudflared
         run: |
           curl -L --output /tmp/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x /tmp/cloudflared
           sudo mv /tmp/cloudflared /usr/local/bin/cloudflared
 
-      # 2. VPSへ Cloudflare Tunnel 経由で SSH 接続してデプロイ
-      - name: VPSへSSH接続してデプロイ
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }} # 例: ssh.ctfgo.net
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_SSH_PORT }}
-          # cloudflared を使い、Service Token を渡してプロキシ接続する
-          proxy_command: >-
-            cloudflared access ssh
-            --hostname %h
-            --id ${{ secrets.CF_ACCESS_CLIENT_ID }}
-            --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
-          envs: ENV_FILE,API_IMAGE,WEB_IMAGE,NGINX_IMAGE
-          script: |
+      # 2. SSH 接続とデプロイを実行
+      - name: Deploy to VPS via SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_PORT: ${{ secrets.VPS_SSH_PORT }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          CF_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+          IMAGE_API: ${{ env.IMAGE_API }}
+          IMAGE_WEB: ${{ env.IMAGE_WEB }}
+          IMAGE_NGINX: ${{ env.IMAGE_NGINX }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_NAME: ${{ github.repository }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          # SSH 秘密鍵と Config の作成
+          mkdir -p ~/.ssh
+          echo "$VPS_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          cat << EOF > ~/.ssh/config
+          Host vps
+            HostName $VPS_HOST
+            User $VPS_USER
+            Port $VPS_PORT
+            IdentityFile ~/.ssh/id_rsa
+            ProxyCommand cloudflared access ssh --hostname %h --id $CF_CLIENT_ID --secret $CF_CLIENT_SECRET
+            StrictHostKeyChecking no
+          EOF
+
+          # .env の改行くずれを防ぐため Base64 化
+          ENV_BASE64=$(echo "$ENV_FILE" | base64 -w 0)
+
+          # VPS へ SSH 接続してコマンド実行
+          ssh vps << EOF
             mkdir -p ~/server/ctfgonet
             cd ~/server/ctfgonet
-            
+
+            # リポジトリの最新化
             if [ -d .git ]; then
               git fetch origin main
               git reset --hard origin/main
             else
-              git clone https://github.com/${{ github.repository }}.git .
+              git clone https://github.com/$REPO_NAME.git .
             fi
-            
-            echo "$ENV_FILE" > .env
-            echo "API_IMAGE=$API_IMAGE" >> .env
-            echo "WEB_IMAGE=$WEB_IMAGE" >> .env
-            echo "NGINX_IMAGE=$NGINX_IMAGE" >> .env
 
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # .env の書き出し
+            echo "$ENV_BASE64" | base64 -d > .env
+            echo "API_IMAGE=$IMAGE_API" >> .env
+            echo "WEB_IMAGE=$IMAGE_WEB" >> .env
+            echo "NGINX_IMAGE=$IMAGE_NGINX" >> .env
 
+            # GHCR ログイン＆再起動
+            echo "$GITHUB_TOKEN" | docker login ghcr.io -u $ACTOR --password-stdin
             docker compose -f compose.yml -f compose.prod.yml pull
             docker compose -f compose.yml -f compose.prod.yml up -d --remove-orphans
             docker image prune -f
+          EOF
