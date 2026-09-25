@@ -28,6 +28,8 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
+RUN mkdir -p /app/public/uploads && chown -R node:node /app/public/uploads
+
 USER node
 
 EXPOSE 5000
