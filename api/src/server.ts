@@ -158,9 +158,9 @@ app.get("/documents", async (req: Request, res: Response) => {
     let params: any[] = [];
 
     if (search) {
-      query += " WHERE title LIKE ? OR tags LIKE ? OR extension LIKE ?";
+      query += " WHERE title LIKE ? OR tags LIKE ? OR extension LIKE ? OR uuid ?";
       const searchParam = `%${search}%`;
-      params = [searchParam, searchParam, searchParam];
+      params = [searchParam, searchParam, searchParam, searchParam];
     }
 
     query += " ORDER BY created_at DESC";

@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"; // 追加
 import {
   Search,
   FileText,
@@ -49,8 +50,11 @@ const getFileIcon = (extension: string) => {
 };
 
 export default function FileStream() {
+  const searchParams = useSearchParams(); // 追加: クエリパラメーターの取得
+  const queryFromUrl = searchParams.get("search") || ""; // URLの ?search= の値を取得
+
   const [docs, setDocs] = useState<Document[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(queryFromUrl); // 初期値に設定
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
 
   const fetchDocs = async (query = "") => {
@@ -68,8 +72,9 @@ export default function FileStream() {
   };
 
   useEffect(() => {
-    fetchDocs();
-  }, []);
+    setSearch(queryFromUrl);
+    fetchDocs(queryFromUrl);
+  }, [queryFromUrl]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
