@@ -30,7 +30,6 @@ export default function Header() {
 
         <Link
           href="/admin"
-          onClick={() => setMenuOpen(false)}
           className="flex gap-2 items-center p-2 rounded-sm hover:bg-foreground/10 text-foreground transition-colors"
         >
           <LogIn size={20} /> Login
