@@ -1,7 +1,8 @@
 // components/FileModal.tsx
 "use client";
 
-import { X, Download, FileText, Calendar, Tag, HardDrive } from "lucide-react";
+import { X, Download, FileText, Calendar, Tag, HardDrive, KeyRound, LockKeyholeOpen, LockKeyhole, Code, MessageSquare} from "lucide-react";
+
 
 interface Document {
   uuid: string;
@@ -109,58 +110,80 @@ export default function FileModal({ doc, onClose }: FileModalProps) {
         <div className="border-t border-border my-1" />
 
         {/* メタデータ領域 */}
-        <div className="space-y-2.5">
-          <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wider flex items-center gap-1">
-            <HardDrive size={12} /> メタデータ詳細
+        <div className="space-y-3">
+          <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wider flex items-center gap-1.5">
+            <HardDrive size={13} /> メタデータ詳細
           </h3>
 
-          <div className="bg-foreground/5 border border-border p-3 rounded-lg space-y-2.5 font-mono text-xs">
-            <div className="flex justify-between items-center gap-4">
+          <div className="bg-foreground/5 border border-border p-3.5 rounded-xl space-y-3 font-mono text-xs">
+            {/* UUID */}
+            <div className="flex justify-between items-center gap-3">
+              <span className="opacity-60 shrink-0 flex items-center gap-1">
+                <Code size={12} /> uuid
+              </span>
+              <span className="text-right font-mono text-[11px] opacity-80 break-all select-all">
+                {doc.uuid}
+              </span>
+            </div>
+
+            {/* アップロード日時 */}
+            <div className="flex justify-between items-center gap-3 pt-2 border-t border-border/50">
               <span className="opacity-60 shrink-0 flex items-center gap-1">
                 <Calendar size={12} /> アップロード日時
               </span>
-              <span className="text-right">{formatDate(doc.created_at)}</span>
+              <span className="text-right opacity-90">{formatDate(doc.created_at)}</span>
             </div>
 
-            <div className="flex justify-between items-center gap-4">
-              <span className="opacity-60 shrink-0">パスワード保護</span>
-              <span className="break-all text-right">
+            {/* パスワード保護 */}
+            <div className="flex justify-between items-center gap-3 pt-2 border-t border-border/50">
+              <span className="opacity-60 shrink-0 flex items-center gap-1">
+                <KeyRound size={12} /> パスワード保護
+              </span>
+              <div>
                 {Number(doc.isProtected) === 1 || doc.isProtected === true ? (
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 border border-amber-500/30">
-                    🔒 あり
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/30">
+                    <LockKeyhole size={12} className="shrink-0" />
+                    <span className="leading-none relative top-[0.5px]">あり</span>
                   </span>
                 ) : (
-                  <span className="text-xs opacity-60">なし</span>
+                  <span className="inline-flex items-center gap-1 text-[11px] opacity-60 px-2 py-0.5 rounded-full bg-foreground/5 border border-border">
+                    <LockKeyholeOpen size={12} className="shrink-0" />
+                    <span className="leading-none relative">なし</span>
+                  </span>
                 )}
+              </div>
+            </div>
+
+            {/* 一言コメント */}
+            <div className="flex flex-col gap-1.5 pt-2 border-t border-border/50 font-sans">
+              <span className="opacity-60 flex items-center gap-1 text-xs font-mono">
+                <MessageSquare size={12} /> 一言
               </span>
+              <div className="bg-background/50 border-l-2 border-border p-2 rounded-r text-xs opacity-90 break-words whitespace-pre-wrap leading-relaxed">
+                {doc.comment || <span className="opacity-40 italic">なし</span>}
+              </div>
             </div>
 
-            {/* 修正箇所：一言（改行して左揃え・自動折り返し指定） */}
-            <div className="flex flex-col gap-1 pt-1 border-t border-border/50">
-              <span className="opacity-60 flex items-center gap-1">一言</span>
-              <p className="wrap-break-word whitespace-pre-wrap text-left opacity-90 pl-1">
-                {doc.comment || "なし"}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-1.5 pt-1 border-t border-border">
-              <span className="opacity-60 flex items-center gap-1">
+            {/* 設定タグ */}
+            <div className="flex flex-col gap-1.5 pt-2 border-t border-border/50 font-sans">
+              <span className="opacity-60 flex items-center gap-1 text-xs font-mono">
                 <Tag size={12} /> 設定タグ
               </span>
-              <div className="flex flex-wrap gap-1 mt-0.5">
-                {doc.tags.split(",").map(
-                  (tag, idx) =>
-                    tag.trim() && (
-                      <span
-                        key={idx}
-                        className="text-[10px] bg-background border border-border px-2 py-0.5 rounded opacity-90"
-                      >
-                        #{tag.trim()}
-                      </span>
-                    ),
-                )}
-                {!doc.tags.trim() && (
-                  <span className="opacity-50 italic">タグなし</span>
+              <div className="flex flex-wrap gap-1.5 mt-0.5">
+                {doc.tags?.split(",").map((tag, idx) => {
+                  const trimmed = tag.trim();
+                  if (!trimmed) return null;
+                  return (
+                    <span
+                      key={idx}
+                      className="text-[10px] bg-background border border-border/80 px-2 py-0.5 rounded-md opacity-90 font-mono"
+                    >
+                      #{trimmed}
+                    </span>
+                  );
+                })}
+                {(!doc.tags || !doc.tags.trim()) && (
+                  <span className="opacity-40 italic text-xs">タグなし</span>
                 )}
               </div>
             </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
+import {FileSearchCorner, Newspaper} from "lucide-react"
 
 export const metadata: Metadata = {
   title: "CTFで学ぶWeb - ctfgo.net",
@@ -44,7 +45,7 @@ export default function HomePage() {
                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4 text-base font-medium bg-foreground/5 text-foreground/40 border border-border rounded-xl cursor-not-allowed transition-all"
                 title="記事まとめサイトは準備中です"
               >
-                <span className="pr-2">▶</span>記事を読む（準備中）
+                <span className="pr-2"><Newspaper size={20} className="relative top-[1px]"/></span>記事を読む（準備中）
               </button>
             </div>
 
@@ -53,7 +54,7 @@ export default function HomePage() {
               href="/files?search="
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
-              <span className="pr-2">▶</span>ファイルを見る
+              <span className="pr-2"><FileSearchCorner id={14} /></span>ファイルを探す
             </Link>
           </div>
         </div>

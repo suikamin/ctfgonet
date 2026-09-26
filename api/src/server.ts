@@ -158,7 +158,7 @@ app.get("/documents", async (req: Request, res: Response) => {
     let params: any[] = [];
 
     if (search) {
-      query += " WHERE title LIKE ? OR tags LIKE ? OR extension LIKE ? OR uuid ?";
+      query += " WHERE title LIKE ? OR tags LIKE ? OR extension LIKE ? OR uuid LIKE ?";
       const searchParam = `%${search}%`;
       params = [searchParam, searchParam, searchParam, searchParam];
     }

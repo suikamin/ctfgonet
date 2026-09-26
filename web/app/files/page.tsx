@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation"; // useRouter を追加
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import {
   Search,
   FileText,
@@ -11,6 +11,7 @@ import {
   FileVideo,
   FileCode,
   File,
+  LockKeyhole
 } from "lucide-react";
 import FileModal from "../components/FileModal";
 
@@ -50,7 +51,8 @@ const getFileIcon = (extension: string) => {
 };
 
 function FileStreamContent() {
-  const router = useRouter(); // 追加
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryFromUrl = searchParams.get("search") || "";
 
@@ -58,6 +60,7 @@ function FileStreamContent() {
   const [search, setSearch] = useState(queryFromUrl);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
 
+  // 1. API通信ロジック
   const fetchDocs = async (query = "") => {
     try {
       const res = await fetch(
@@ -72,19 +75,20 @@ function FileStreamContent() {
     }
   };
 
-  // URLのクエリパラメータ（queryFromUrl）が変わったら検索処理を実行し、入力欄も更新
+  // 2. URLのクエリ（queryFromUrl）の変化だけを単一のトリガーとして検知・同期・フェッチを行う
   useEffect(() => {
     setSearch(queryFromUrl);
     fetchDocs(queryFromUrl);
   }, [queryFromUrl]);
 
-  // 検索ボタン押下時（URLのクエリパラメータを書き換える）
+  // 3. フォーム送信時：画面上の表示更新は行わず、URLクエリを書き換えてリダイレクト（推移）させる
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (search.trim()) {
-      router.push(`?search=${encodeURIComponent(search.trim())}`);
+    const trimmed = search.trim();
+    if (trimmed) {
+      router.push(`${pathname}?search=${encodeURIComponent(trimmed)}`);
     } else {
-      router.push(""); // 空文字の場合はクエリなしのURLにする
+      router.push(`${pathname}?search=`);
     }
   };
 
@@ -115,42 +119,52 @@ function FileStreamContent() {
 
       {/* ドキュメントグリッド */}
       {docs.length === 0 ? (
-        <p className="text-center opacity-50 py-12">
+        <p className="text-center opacity-50 py-16 text-sm">
           該当するファイルが見つかりません。
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {docs.map((doc) => (
             <div
               key={doc.uuid}
               onClick={() => setSelectedDoc(doc)}
-              className="group cursor-pointer border border-border rounded-lg p-4 bg-background hover:shadow-md hover:border-foreground/50 transition-all flex flex-col justify-between h-52"
+              className="group cursor-pointer border border-border/80 hover:border-foreground/40 rounded-xl p-3.5 bg-background hover:shadow-lg transition-all duration-200 flex flex-col justify-between h-56"
             >
-              {/* プレースホルダーアイコン */}
-              <div className="bg-foreground/5 text-foreground items-center justify-center gap-2 transition-colors flex flex-col rounded">
+              {/* アイコンプレースホルダー領域 */}
+              <div className="relative bg-foreground/5 rounded-lg py-4 px-2 text-foreground flex flex-col items-center justify-center flex-1 overflow-hidden transition-colors group-hover:bg-foreground/[0.07]">
+                {/* パスワード保護されている場合は右上に鍵アイコンを表示 */}
+                {(Number(doc.isProtected) === 1 || doc.isProtected === true) && (
+                  <span className="absolute top-2 right-2 bg-amber-500/10 text-amber-600 border border-amber-500/20 p-1 rounded-md">
+                    <LockKeyhole size={12} />
+                  </span>
+                )}
+                
                 {getFileIcon(doc.extension)}
-                <span className="flex text-[10px] justify-center items-center uppercase font-mono tracking-wider opacity-60 h-8">
+                
+                <span className="mt-1 text-[10px] font-mono tracking-wider opacity-60 uppercase font-semibold">
                   {doc.extension}
                 </span>
               </div>
 
-              {/* 情報領域 */}
-              <div className="mt-2 space-y-1">
-                <h3 className="font-semibold text-sm line-clamp-1 group-hover:opacity-80 transition-opacity">
+              {/* テキスト領域 */}
+              <div className="pt-3 px-0.5 space-y-1.5">
+                <h3 className="font-medium text-sm line-clamp-1 group-hover:opacity-80 transition-opacity">
                   {doc.title}
                 </h3>
-                <div className="flex flex-wrap gap-1">
-                  {doc.tags.split(",").map(
-                    (tag, idx) =>
-                      tag.trim() && (
-                        <span
-                          key={idx}
-                          className="text-[10px] bg-foreground/10 px-1.5 py-0.5 rounded opacity-80"
-                        >
-                          #{tag.trim()}
-                        </span>
-                      ),
-                  )}
+                
+                <div className="flex flex-wrap gap-1 max-h-10 overflow-hidden">
+                  {doc.tags?.split(",").map((tag, idx) => {
+                    const trimmed = tag.trim();
+                    if (!trimmed) return null;
+                    return (
+                      <span
+                        key={idx}
+                        className="text-[10px] bg-foreground/5 border border-border/60 px-1.5 py-0.5 rounded opacity-75 font-mono"
+                      >
+                        #{trimmed}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>
