@@ -50,7 +50,7 @@ export default function HomePage() {
 
             {/* ファイルを見るボタン */}
             <Link
-              href="/files"
+              href="/files?search="
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
               <span className="pr-2">▶</span>ファイルを見る

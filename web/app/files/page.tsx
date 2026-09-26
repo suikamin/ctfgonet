@@ -1,8 +1,8 @@
 // page.tsx
 "use client";
 
-import { useEffect, useState, Suspense } from "react"; // Suspense を追加
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation"; // useRouter を追加
 import {
   Search,
   FileText,
@@ -49,8 +49,8 @@ const getFileIcon = (extension: string) => {
   return <File className={classname} />;
 };
 
-// --- クエリパラメーター取得と表示の本体コンポーネント ---
 function FileStreamContent() {
+  const router = useRouter(); // 追加
   const searchParams = useSearchParams();
   const queryFromUrl = searchParams.get("search") || "";
 
@@ -72,14 +72,20 @@ function FileStreamContent() {
     }
   };
 
+  // URLのクエリパラメータ（queryFromUrl）が変わったら検索処理を実行し、入力欄も更新
   useEffect(() => {
     setSearch(queryFromUrl);
     fetchDocs(queryFromUrl);
   }, [queryFromUrl]);
 
+  // 検索ボタン押下時（URLのクエリパラメータを書き換える）
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchDocs(search);
+    if (search.trim()) {
+      router.push(`?search=${encodeURIComponent(search.trim())}`);
+    } else {
+      router.push(""); // 空文字の場合はクエリなしのURLにする
+    }
   };
 
   return (
@@ -158,10 +164,13 @@ function FileStreamContent() {
   );
 }
 
-// --- エクスポート用の親コンポーネント (Suspenseでラップ) ---
 export default function FileStream() {
   return (
-    <Suspense fallback={<div className="text-center opacity-50 py-12">読み込み中...</div>}>
+    <Suspense
+      fallback={
+        <div className="text-center opacity-50 py-12">読み込み中...</div>
+      }
+    >
       <FileStreamContent />
     </Suspense>
   );
