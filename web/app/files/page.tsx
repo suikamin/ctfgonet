@@ -1,8 +1,8 @@
 // page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // 追加
+import { useEffect, useState, Suspense } from "react"; // Suspense を追加
+import { useSearchParams } from "next/navigation";
 import {
   Search,
   FileText,
@@ -49,12 +49,13 @@ const getFileIcon = (extension: string) => {
   return <File className={classname} />;
 };
 
-export default function FileStream() {
-  const searchParams = useSearchParams(); // 追加: クエリパラメーターの取得
-  const queryFromUrl = searchParams.get("search") || ""; // URLの ?search= の値を取得
+// --- クエリパラメーター取得と表示の本体コンポーネント ---
+function FileStreamContent() {
+  const searchParams = useSearchParams();
+  const queryFromUrl = searchParams.get("search") || "";
 
   const [docs, setDocs] = useState<Document[]>([]);
-  const [search, setSearch] = useState(queryFromUrl); // 初期値に設定
+  const [search, setSearch] = useState(queryFromUrl);
   const [selectedDoc, setSelectedDoc] = useState<Document | null>(null);
 
   const fetchDocs = async (query = "") => {
@@ -154,5 +155,14 @@ export default function FileStream() {
       {/* ポップアップコンポーネント */}
       <FileModal doc={selectedDoc} onClose={() => setSelectedDoc(null)} />
     </div>
+  );
+}
+
+// --- エクスポート用の親コンポーネント (Suspenseでラップ) ---
+export default function FileStream() {
+  return (
+    <Suspense fallback={<div className="text-center opacity-50 py-12">読み込み中...</div>}>
+      <FileStreamContent />
+    </Suspense>
   );
 }
