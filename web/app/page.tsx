@@ -70,7 +70,7 @@ export default function HomePage() {
             <p className="text-sm opacity-60 mt-1">お知らせ・更新情報</p>
           </div>
 
-          <div className="bg-background border border-border rounded-2xl p-8 sm:p-12 text-center shadow-sm relative overflow-hidden">
+          <div className="bg-background border border-border rounded-2xl p-8 sm:px-12 sm:pb-100  text-center shadow-sm relative overflow-hidden">
             <div className="space-y-4 max-w-md mx-auto">
               <span className="inline-block bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold px-3 py-1 rounded-full">
                 Coming Soon
@@ -130,7 +130,7 @@ export default function HomePage() {
                     GitHub
                   </a>
                   <a
-                    href="https://github.com/suikamin/"
+                    href="https://x.com/nikodehyakuen"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:opacity-100 transition underline underline-offset-4"
@@ -138,20 +138,20 @@ export default function HomePage() {
                     X (旧Twitter)
                   </a>
                   <a
-                    href="https://github.com/suikamin/"
+                    href="/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:opacity-100 transition underline underline-offset-4"
                   >
-                    YouTube
+                    YouTube - 準備中 -
                   </a>
                   <a
-                    href="https://github.com/suikamin/"
+                    href="/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:opacity-100 transition underline underline-offset-4"
                   >
-                    Discord
+                    Discord - 準備中 -
                   </a>
                   <Link
                     href={"/about"}

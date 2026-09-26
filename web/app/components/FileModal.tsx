@@ -79,7 +79,7 @@ export default function FileModal({ doc, onClose }: FileModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="absolute inset-0" onClick={onClose} />
 
       <div className="relative w-full max-w-md bg-background text-foreground border border-border rounded-xl shadow-2xl p-6 z-10 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
@@ -135,11 +135,12 @@ export default function FileModal({ doc, onClose }: FileModalProps) {
               </span>
             </div>
 
-            <div className="flex justify-between items-center gap-4">
-              <span className="opacity-60 shrink-0 flex items-center gap-1">
-                一言
-              </span>
-              <span className="text-right">{doc.comment}</span>
+            {/* 修正箇所：一言（改行して左揃え・自動折り返し指定） */}
+            <div className="flex flex-col gap-1 pt-1 border-t border-border/50">
+              <span className="opacity-60 flex items-center gap-1">一言</span>
+              <p className="wrap-break-word whitespace-pre-wrap text-left opacity-90 pl-1">
+                {doc.comment || "なし"}
+              </p>
             </div>
 
             <div className="flex flex-col gap-1.5 pt-1 border-t border-border">

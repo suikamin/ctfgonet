@@ -108,6 +108,18 @@ export default function About() {
         </ul>
       </section>
 
+      <section className="mb-12">
+        <h2 className="text-xl font-bold mb-3 flex items-center">
+          <span className="mr-2">5.</span> AI & Disclaimer
+        </h2>
+        <span className="space-y-2 text-sm leading-relaxed opacity-90">
+          当サイト（ctfgo.net）と当サイトのコンテンツは、AI技術を活用して開発・運用されています。掲載情報の正確性や安全性には十分注意しておりますが、内容の保証はいたしかねます。当サイトの利用により生じた損害について、管理者は一切の責任を負いません。
+          This website (ctfgo.net) is developed and operated with the assistance
+          of AI technology. While we strive for accuracy, we cannot guarantee
+          the complete reliability of all content. Use at your own risk.
+        </span>
+      </section>
+
       <hr className="my-8 border-border" />
 
       {/* About Me セクション */}
@@ -158,7 +170,7 @@ export default function About() {
                 GitHub
               </a>
               <a
-                href="https://github.com/suikamin/"
+                href="https://x.com/nikodehyakuen"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
@@ -166,20 +178,20 @@ export default function About() {
                 X (旧Twitter)
               </a>
               <a
-                href="https://github.com/suikamin/"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
               >
-                YouTube
+                YouTube - 準備中 -
               </a>
               <a
-                href="https://github.com/suikamin/"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-70 transition underline underline-offset-4"
               >
-                Discord
+                Discord - 準備中 -
               </a>
             </div>
           </div>
