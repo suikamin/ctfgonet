@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 import {FileSearchCorner, Newspaper} from "lucide-react"
+import { getUpdates } from "./lib/updates";
 
 export const metadata: Metadata = {
   title: "CTFで学ぶWeb - ctfgo.net",
@@ -14,14 +15,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const updates = await getUpdates();
   return (
     <div className="space-y-12 snap-y snap-mandatory">
       {/* 1. ヒーローセクション */}
       <section className="min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center text-center px-4 snap-start">
         <div className="max-w-3xl mx-auto space-y-6">
           <span className="inline-block bg-foreground/10 text-foreground font-semibold text-sm px-3 py-1 rounded-full border border-border">
-            Learning Archive (Pre-release)
+            Learning Archive
           </span>
 
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
@@ -60,7 +62,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. What's New セクション（準備中UI） */}
+      {/* 2. What's New セクション */}
       <section className="min-h-[calc(100vh-10rem)] flex flex-col items-center px-4 snap-start">
         <div className="w-full max-w-3xl">
           <div className="text-center mb-8">
@@ -71,25 +73,55 @@ export default function HomePage() {
             <p className="text-sm opacity-60 mt-1">お知らせ・更新情報</p>
           </div>
 
-          <div className="bg-background border border-border rounded-2xl p-8 sm:px-12 sm:pb-100  text-center shadow-sm relative overflow-hidden">
-            <div className="space-y-4 max-w-md mx-auto">
-              <span className="inline-block bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs font-semibold px-3 py-1 rounded-full">
-                Coming Soon
-              </span>
-              <h3 className="text-lg font-bold">お知らせ配信機能を準備中</h3>
-
-              {/* スケルトン風のダミー表示（更新ログが並ぶイメージ） */}
-              <div className="pt-4 space-y-2.5 opacity-30 pointer-events-none">
-                <div className="h-9 bg-foreground/10 rounded-lg w-full flex items-center px-4 justify-between">
-                  <span className="h-2.5 bg-foreground/30 rounded w-16"></span>
-                  <span className="h-2.5 bg-foreground/30 rounded w-44 sm:w-64"></span>
-                </div>
-                <div className="h-9 bg-foreground/10 rounded-lg w-full flex items-center px-4 justify-between">
-                  <span className="h-2.5 bg-foreground/30 rounded w-16"></span>
-                  <span className="h-2.5 bg-foreground/30 rounded w-36 sm:w-48"></span>
-                </div>
+          <div className="bg-background border border-border rounded-2xl shadow-sm overflow-hidden">
+            {updates.length === 0 ? (
+              <div className="p-12 text-center text-sm opacity-60">
+                現在お知らせはありません
               </div>
-            </div>
+            ) : (
+              <ul className="divide-y divide-border text-sm">
+                {updates.map((item) => (
+                  <li
+                    key={item.id}
+                    className="p-4 sm:p-5 hover:bg-foreground/5 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-xs font-mono opacity-60">
+                          {item.date}
+                        </span>
+                        {item.category && (
+                          <span className="inline-block px-2 py-0.5 text-[11px] rounded bg-foreground/10 text-foreground font-medium">
+                            {item.category}
+                          </span>
+                        )}
+                      </div>
+                      {item.url ? (
+                        <Link
+                          href={item.url}
+                          className="font-medium text-foreground hover:underline truncate"
+                        >
+                          {item.title}
+                        </Link>
+                      ) : (
+                        <span className="font-medium text-foreground truncate">
+                          {item.title}
+                        </span>
+                      )}
+                    </div>
+
+                    {item.url && (
+                      <Link
+                        href={item.url}
+                        className="text-xs text-foreground/50 hover:text-foreground shrink-0 inline-flex items-center gap-1 self-end sm:self-auto transition-colors"
+                      >
+                        詳細を見る →
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 

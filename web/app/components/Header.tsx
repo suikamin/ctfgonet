@@ -1,16 +1,12 @@
 // components/Header.tsx
-"use client";
-
-import { useState, useEffect } from "react";
-import { Sun, Moon, LogIn } from "lucide-react";
 import Link from "next/link";
+import { LogIn } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+import { WhatsNewMenu } from "./WhatsNewMenu";
+import { getUpdates } from "../lib/updates";
 
-export default function Header() {
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    document.documentElement.className = theme;
-  }, [theme]);
+export default async function Header() {
+  const updates = await getUpdates();
 
   return (
     <div className="max-w-6xl mx-auto flex justify-between items-center w-full text-foreground">
@@ -18,15 +14,12 @@ export default function Header() {
         CTFで学ぶWeb
       </Link>
 
-      <div className="flex items-center gap-4">
-        {/* テーマ切り替えボタン */}
-        <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="p-2 rounded-md hover:bg-foreground/10 transition-colors"
-        >
-          {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* お知らせ・更新履歴 (What's new) */}
+        <WhatsNewMenu items={updates} />
 
+        {/* テーマ切り替えボタン */}
+        <ThemeToggle />
 
         <Link
           href="/admin"
@@ -34,8 +27,9 @@ export default function Header() {
         >
           <LogIn size={20} /> Login
         </Link>
-
       </div>
     </div>
   );
 }
+
+export { Header };
