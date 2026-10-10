@@ -213,7 +213,7 @@ export default function About() {
           <div className="flex-grow text-center sm:text-left">
             <div className="mb-2">
               <h2 className="text-lg font-medium inline-block mr-2">
-                二個で百円
+                nikodehyakuen
               </h2>
               <span className="text-xs opacity-60">/ 運営・開発</span>
             </div>

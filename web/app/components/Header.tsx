@@ -20,7 +20,7 @@ export default async function Header() {
             href="https://blog.ctfgo.net"
             className="text-foreground/70 hover:text-foreground transition-colors"
           >
-            Blog
+            Article
           </Link>
           <Link
             href="/files"

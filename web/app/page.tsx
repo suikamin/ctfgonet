@@ -3,9 +3,8 @@ import Image from "next/image";
 import { Metadata } from "next";
 import {
   FileSearchCorner,
-  Newspaper,
-  ArrowRight,
   ShieldAlert,
+  SquareArrowOutUpRight
 } from "lucide-react";
 import { getUpdates } from "./lib/updates";
 import VulnerabilityShowcase from "./components/VulnerabilityShowcase";
@@ -36,7 +35,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-20 sm:space-y-28 md:space-y-36 pb-12">
       {/* 1. ヒーローセクション */}
-      <section className="relative min-h-[calc(100vh-14rem)] rounded-3xl overflow-hidden border border-border bg-background flex flex-col justify-start items-start p-6 sm:p-10 md:p-14 shadow-sm">
+      <section className="relative -mx-4 -mt-4 sm:mx-0 sm:mt-0 min-h-[calc(100svh-4.5rem)] sm:min-h-[520px] md:min-h-[580px] lg:min-h-[640px] sm:max-h-[760px] rounded-none sm:rounded-3xl overflow-hidden border-b sm:border border-border bg-background flex flex-col justify-center items-start p-6 sm:p-10 md:p-14 lg:p-16 shadow-sm">
         {/* 背景画像 & グラデーションオーバーレイ */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <Image
@@ -44,68 +43,70 @@ export default async function HomePage() {
             alt="Cybersecurity Hero Background"
             fill
             priority
-            className="object-cover object-right md:object-center opacity-25 dark:opacity-40 select-none"
+            sizes="100vw"
+            className="object-cover object-center opacity-30 dark:opacity-45 select-none"
           />
-          {/* 左側のテキスト可読性を高めるグラデーション */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+          {/* モバイル・デスクトップそれぞれの画面特性に合わせたグラデーションオーバーレイ */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/80 to-background/95 sm:bg-gradient-to-r sm:from-background sm:via-background/85 sm:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
         </div>
 
-        {/* 左上コンテンツ */}
-        <div className="relative z-10 max-w-2xl space-y-6 text-left">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-foreground/5 text-foreground/80 border border-border backdrop-blur-md">
+        {/* コンテンツエリア */}
+        <div className="relative z-10 max-w-2xl lg:max-w-3xl xl:max-w-4xl space-y-6 lg:space-y-8 text-left w-full my-auto sm:my-0">
+          <div className="space-y-3 sm:space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-full bg-foreground/5 text-foreground/80 border border-border backdrop-blur-md">
               Cyber Security & Low-layer Learning
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.25]">
-              <span className="text-foreground">CTFで学ぶ</span>
-              <br />
-              <span className="inline-block bg-gradient-to-r from-sky-500 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
-                Web
+            <h1 className="font-extrabold tracking-tight leading-[1.2] sm:leading-[1.2]">
+              <span className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl text-foreground/80 font-bold block mb-1.5 sm:mb-2 tracking-normal">
+                CTFで学ぶ
               </span>
-              <span className="text-foreground/30 font-light mx-2">・</span>
-              <span className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
-                コンピュータ
-              </span>
-              <br className="sm:hidden" />
-              <span className="text-foreground/30 font-light mx-2 hidden sm:inline">
-                ・
-              </span>
-              <span className="inline-block bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
-                情報セキュリティ
+              <span className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[3.75rem] font-extrabold flex flex-wrap items-center gap-x-2 gap-y-1 sm:gap-x-3 sm:gap-y-2">
+                <span className="inline-block bg-gradient-to-r from-sky-500 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
+                  Web
+                </span>
+                <span className="text-foreground/30 font-light text-xl sm:text-3xl">・</span>
+                <span className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent whitespace-nowrap">
+                  コンピュータ
+                </span>
+                <span className="text-foreground/30 font-light text-xl sm:text-3xl">・</span>
+                <span className="inline-block bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent whitespace-nowrap">
+                  情報セキュリティ
+                </span>
               </span>
             </h1>
           </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed max-w-xl">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-foreground/85 leading-relaxed max-w-xl lg:max-w-2xl">
             Webの起源からモダン開発、
-            <br />
+            <br className="hidden xs:inline" />
             コンピュータ上でアプリが動く仕組み ──
-            <br className="hidden sm:inline" />
             <br />
-            CTF（Web / Pwn）を通じて現代の情報セキュリティを学ぶ
+            <span className="mt-1 block">
+              CTF（Web / Pwn）を通じて現代の情報セキュリティを学ぶ
+            </span>
           </p>
 
           {/* メインCTAエリア */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center sm:items-start justify-start gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-start justify-start gap-3 sm:gap-4 w-full sm:w-auto">
             <Link
               href="https://blog.ctfgo.net"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 text-sm sm:text-base font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base lg:text-lg font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
               <span className="pr-2">
-                <Newspaper size={18} />
+                <SquareArrowOutUpRight size={20}/>
               </span>
-              記事を読む
+              さぁ、始めよう
             </Link>
 
             {/* ファイルを見るボタン */}
             <Link
               href="/files?search="
-              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 text-sm sm:text-base font-bold bg-background/80 hover:bg-foreground/5 text-foreground border border-border backdrop-blur-md rounded-xl shadow-sm transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base lg:text-lg font-bold bg-background/80 hover:bg-foreground/5 text-foreground border border-border backdrop-blur-md rounded-xl shadow-sm transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
               <span className="pr-2">
-                <FileSearchCorner size={18} />
+                <FileSearchCorner size={20} />
               </span>
               ファイルを探す
             </Link>
@@ -131,31 +132,10 @@ export default async function HomePage() {
               </span>
               を理解していますか？
             </h2>
-
-            <p className="max-w-2xl mx-auto text-base sm:text-lg text-foreground/75 leading-relaxed">
-              現代の攻撃を防ぐ鍵は、表面的なルールではなく
-              <strong className="text-foreground font-semibold">
-                「システムが裏側でどう動いているか」
-              </strong>
-              の深層理解が重要です。
-            </p>
           </div>
 
           <VulnerabilityShowcase />
 
-          {/* 下部メッセージ＆導線 */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <p className="text-sm text-foreground/70">
-              小手先のテクニックではなく、土台から理解を深めませんか？
-            </p>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:opacity-80 transition-opacity underline-offset-4 hover:underline"
-            >
-              このサイトの思想・詳細を見る
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
         </div>
       </section>
 
