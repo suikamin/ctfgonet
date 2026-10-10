@@ -11,8 +11,10 @@ import {
   FileVideo,
   FileCode,
   File,
-  LockKeyhole
+  LockKeyhole,
+  LogIn,
 } from "lucide-react";
+import Link from "next/link";
 import FileModal from "../components/FileModal";
 
 interface Document {
@@ -94,6 +96,20 @@ function FileStreamContent() {
 
   return (
     <div className="space-y-8 text-foreground">
+      {/* ページヘッダー & 管理者リンク */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/60 pb-4">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          ファイル一覧
+        </h1>
+        <Link
+          href="/admin"
+          className="self-end sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg border border-border/80 bg-background hover:bg-foreground/5 hover:border-foreground/30 text-foreground/80 hover:text-foreground transition-all shadow-sm"
+        >
+          <LogIn size={16} />
+          <span>Admin</span>
+        </Link>
+      </div>
+
       {/* 検索セクション */}
       <form
         onSubmit={handleSearch}
@@ -133,14 +149,15 @@ function FileStreamContent() {
               {/* アイコンプレースホルダー領域 */}
               <div className="relative bg-foreground/5 rounded-lg py-4 px-2 text-foreground flex flex-col items-center justify-center flex-1 overflow-hidden transition-colors group-hover:bg-foreground/[0.07]">
                 {/* パスワード保護されている場合は右上に鍵アイコンを表示 */}
-                {(Number(doc.isProtected) === 1 || doc.isProtected === true) && (
+                {(Number(doc.isProtected) === 1 ||
+                  doc.isProtected === true) && (
                   <span className="absolute top-2 right-2 bg-amber-500/10 text-amber-600 border border-amber-500/20 p-1 rounded-md">
                     <LockKeyhole size={12} />
                   </span>
                 )}
-                
+
                 {getFileIcon(doc.extension)}
-                
+
                 <span className="mt-1 text-[10px] font-mono tracking-wider opacity-60 uppercase font-semibold">
                   {doc.extension}
                 </span>
@@ -151,7 +168,7 @@ function FileStreamContent() {
                 <h3 className="font-medium text-sm line-clamp-1 group-hover:opacity-80 transition-opacity">
                   {doc.title}
                 </h3>
-                
+
                 <div className="flex flex-wrap gap-1 max-h-10 overflow-hidden">
                   {doc.tags?.split(",").map((tag, idx) => {
                     const trimmed = tag.trim();

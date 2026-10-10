@@ -1,16 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
-import {FileSearchCorner, Newspaper} from "lucide-react"
+import {
+  FileSearchCorner,
+  Newspaper,
+  ArrowRight,
+  ShieldAlert,
+} from "lucide-react";
 import { getUpdates } from "./lib/updates";
+import VulnerabilityShowcase from "./components/VulnerabilityShowcase";
 
 export const metadata: Metadata = {
-  title: "CTFで学ぶWeb - ctfgo.net",
-  description: "WebやCTFの学習記録・ファイル共有プラットフォーム",
-  keywords: ["ctfgo", "ctfgo.net", "ctf", "web"],
+  title: "CTFで学ぶ情報セキュリティ | ctfgo.net",
+  description:
+    "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ解説記事と資料ダウンロードプラットフォーム",
+  keywords: [
+    "ctfgo",
+    "ctfgo.net",
+    "ctf",
+    "web",
+    "pwn",
+    "セキュリティ",
+    "CTFで学ぶ",
+  ],
   openGraph: {
-    title: "CTFで学ぶWeb - ctfgo.net",
-    description: "Webに関する資料をダウンロード",
+    title: "CTFで学ぶセキュリティ | ctfgo.net",
+    description:
+      "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ解説記事と資料ダウンロード",
     type: "website",
   },
 };
@@ -18,64 +34,149 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const updates = await getUpdates();
   return (
-    <div className="space-y-12 snap-y snap-mandatory">
+    <div className="space-y-20 sm:space-y-28 md:space-y-36 pb-12">
       {/* 1. ヒーローセクション */}
-      <section className="min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center text-center px-4 snap-start">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <span className="inline-block bg-foreground/10 text-foreground font-semibold text-sm px-3 py-1 rounded-full border border-border">
-            Learning Archive
-          </span>
+      <section className="relative min-h-[calc(100vh-14rem)] rounded-3xl overflow-hidden border border-border bg-background flex flex-col justify-start items-start p-6 sm:p-10 md:p-14 shadow-sm">
+        {/* 背景画像 & グラデーションオーバーレイ */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <Image
+            src="/hero_bg.jpg"
+            alt="Cybersecurity Hero Background"
+            fill
+            priority
+            className="object-cover object-right md:object-center opacity-25 dark:opacity-40 select-none"
+          />
+          {/* 左側のテキスト可読性を高めるグラデーション */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+        </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-            Webについて、
-            <br className="hidden sm:inline" />
-            <span className="opacity-90">CTFで、</span>勉強しよう！
-          </h1>
+        {/* 左上コンテンツ */}
+        <div className="relative z-10 max-w-2xl space-y-6 text-left">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-foreground/5 text-foreground/80 border border-border backdrop-blur-md">
+              Cyber Security & Low-layer Learning
+            </div>
 
-          <p className="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">
-            CTFやWebに関する記事の閲覧、資料のダウンロードができます。
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight leading-[1.25]">
+              <span className="text-foreground">CTFで学ぶ</span>
+              <br />
+              <span className="inline-block bg-gradient-to-r from-sky-500 to-blue-600 dark:from-sky-400 dark:to-blue-400 bg-clip-text text-transparent">
+                Web
+              </span>
+              <span className="text-foreground/30 font-light mx-2">・</span>
+              <span className="inline-block bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
+                コンピュータ
+              </span>
+              <br className="sm:hidden" />
+              <span className="text-foreground/30 font-light mx-2 hidden sm:inline">
+                ・
+              </span>
+              <span className="inline-block bg-gradient-to-r from-violet-600 to-fuchsia-600 dark:from-violet-400 dark:to-fuchsia-400 bg-clip-text text-transparent">
+                情報セキュリティ
+              </span>
+            </h1>
+          </div>
+
+          <p className="text-sm sm:text-base md:text-lg text-foreground/80 leading-relaxed max-w-xl">
+            Webの起源からモダン開発、
+            <br />
+            コンピュータ上でアプリが動く仕組み ──
             <br className="hidden sm:inline" />
-            ※ダウンロードについては、私的利用に限ります
+            <br />
+            CTF（Web / Pwn）を通じて現代の情報セキュリティを学ぶ
           </p>
 
           {/* メインCTAエリア */}
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-            {/* 1. 未リリースの記事まとめサイトへのボタン（準備中UI） */}
-            <div className="relative w-full sm:w-auto">
-              <button
-                disabled
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4 text-base font-medium bg-foreground/5 text-foreground/40 border border-border rounded-xl cursor-not-allowed transition-all"
-                title="記事まとめサイトは準備中です"
-              >
-                <span className="pr-2"><Newspaper/></span>記事を読む（準備中）
-              </button>
-            </div>
+          <div className="pt-2 flex flex-col sm:flex-row items-center sm:items-start justify-start gap-4">
+            <Link
+              href="https://blog.ctfgo.net"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 text-sm sm:text-base font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
+            >
+              <span className="pr-2">
+                <Newspaper size={18} />
+              </span>
+              記事を読む
+            </Link>
 
             {/* ファイルを見るボタン */}
             <Link
               href="/files?search="
-              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 text-sm sm:text-base font-bold bg-background/80 hover:bg-foreground/5 text-foreground border border-border backdrop-blur-md rounded-xl shadow-sm transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
-              <span className="pr-2"><FileSearchCorner/></span>ファイルを探す
+              <span className="pr-2">
+                <FileSearchCorner size={18} />
+              </span>
+              ファイルを探す
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 2. What's New セクション */}
-      <section className="min-h-[calc(100vh-10rem)] flex flex-col items-center px-4 snap-start">
-        <div className="w-full max-w-3xl">
+      {/* 2. Reality Check セクション */}
+      <section className="flex flex-col items-center justify-center px-4">
+        <div className="w-full max-w-4xl space-y-10 text-center">
+          {/* 見出しブロック */}
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-red-500/10 text-red-500 border border-red-500/20">
+              <ShieldAlert className="w-4 h-4" />
+              Reality Check
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.3]">
+              あなたは本当に、
+              <br className="sm:hidden" />
+              <span className="text-blue-800 bg-clip-text">
+                情報セキュリティ
+              </span>
+              を理解していますか？
+            </h2>
+
+            <p className="max-w-2xl mx-auto text-base sm:text-lg text-foreground/75 leading-relaxed">
+              現代の攻撃を防ぐ鍵は、表面的なルールではなく
+              <strong className="text-foreground font-semibold">
+                「システムが裏側でどう動いているか」
+              </strong>
+              の深層理解が重要です。
+            </p>
+          </div>
+
+          <VulnerabilityShowcase />
+
+          {/* 下部メッセージ＆導線 */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <p className="text-sm text-foreground/70">
+              小手先のテクニックではなく、土台から理解を深めませんか？
+            </p>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground hover:opacity-80 transition-opacity underline-offset-4 hover:underline"
+            >
+              このサイトの思想・詳細を見る
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. What's New セクション */}
+      <section className="flex flex-col items-center px-4">
+        <div className="w-full max-w-4xl">
           <div className="text-center mb-8">
-            <span className="text-xs font-mono tracking-wider opacity-60 uppercase block mb-1">
+            <span className="text-xs font-mono tracking-wider text-foreground/60 uppercase block mb-1">
               Updates
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold">What's New</h2>
-            <p className="text-sm opacity-60 mt-1">お知らせ・更新情報</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              What&apos;s New
+            </h2>
+            <p className="text-sm text-foreground/60 mt-1">
+              お知らせ・更新情報
+            </p>
           </div>
 
           <div className="bg-background border border-border rounded-2xl shadow-sm overflow-hidden">
             {updates.length === 0 ? (
-              <div className="p-12 text-center text-sm opacity-60">
+              <div className="p-12 text-center text-sm text-foreground/60">
                 現在お知らせはありません
               </div>
             ) : (
@@ -83,11 +184,11 @@ export default async function HomePage() {
                 {updates.map((item) => (
                   <li
                     key={item.id}
-                    className="p-4 sm:p-5 hover:bg-foreground/5 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4"
+                    className="p-4 sm:p-5 hover:bg-foreground/[0.03] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0">
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-xs font-mono opacity-60">
+                        <span className="text-xs font-mono text-foreground/60">
                           {item.date}
                         </span>
                         {item.category && (
@@ -122,79 +223,6 @@ export default async function HomePage() {
                 ))}
               </ul>
             )}
-          </div>
-        </div>
-
-        <div className="w-full mt-32 border-t border-border/30 pt-12 pb-16 opacity-75 hover:opacity-100 transition-opacity">
-          <div className="max-w-3xl mx-auto px-4">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              {/* アイコン */}
-              <div className="flex-shrink-0">
-                <Image
-                  src="/author_icon.jpg"
-                  alt="運営者のアイコン"
-                  width={80}
-                  height={80}
-                  className="w-20 h-20 rounded-full object-cover grayscale-[30%] border border-border"
-                />
-              </div>
-
-              {/* 右側コンテンツ領域 */}
-              <div className="flex-grow space-y-3 text-center sm:text-left">
-                {/* 名前・肩書 */}
-                <div>
-                  <span className="text-[10px] font-mono tracking-widest opacity-50 uppercase block mb-0.5">
-                    About Author
-                  </span>
-                  <h2 className="text-xl font-bold inline-block mr-2 text-foreground/90">
-                    二個で百円
-                  </h2>
-                  <span className="text-xs opacity-50">/ 運営・開発</span>
-                </div>
-
-                {/* 2. リンク類 */}
-                <div className="pt-1 flex flex-wrap justify-center sm:justify-start gap-4 text-xs font-medium opacity-80">
-                  <a
-                    href="https://github.com/suikamin/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-100 transition underline underline-offset-4"
-                  >
-                    GitHub
-                  </a>
-                  <a
-                    href="https://x.com/nikodehyakuen"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-100 transition underline underline-offset-4"
-                  >
-                    X (旧Twitter)
-                  </a>
-                  <a
-                    href="/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-100 transition underline underline-offset-4"
-                  >
-                    YouTube - 準備中 -
-                  </a>
-                  <a
-                    href="/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-100 transition underline underline-offset-4"
-                  >
-                    Discord - 準備中 -
-                  </a>
-                  <Link
-                    href={"/about"}
-                    className="hover:opacity-100 transition underline underline-offset-4"
-                  >
-                    More about me
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

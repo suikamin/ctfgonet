@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const metadata = {
-  title: "ABOUT | FILEUPLOADER",
+  title: "ABOUT | ctfgo.net",
 };
 
 export default function About() {
@@ -12,8 +12,81 @@ export default function About() {
         About
       </h1>
 
+      {/* このサイトについて */}
+      <section className="mb-10 space-y-8">
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-foreground tracking-tight">
+            このサイトについて
+          </h2>
+
+          <div className="p-4 sm:p-5 rounded-2xl border border-border/80 bg-foreground/[0.03] space-y-2">
+            <p className="font-bold text-base sm:text-lg text-foreground">
+              「Webはどうやって生まれ、コンピュータは裏側でどう動いているのか」
+            </p>
+            <p className="text-sm leading-relaxed opacity-90">
+              <strong className="text-foreground">ctfgo.net</strong>{" "}
+              は、CTF（Capture The
+              Flag）の実践を通して、現代に必要な情報セキュリティの基礎を根本から学ぶための学習アーカイブです。
+            </p>
+          </div>
+        </div>
+
+        {/* 表面的な知識ではなく仕組みから理解する */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-bold text-foreground">
+            表面的な知識ではなく、「仕組み」から理解する
+          </h3>
+          <p className="text-sm leading-relaxed opacity-90">
+            セキュリティの脆弱性を学ぶとき、ツールの使い方や表面的な対策手順だけを覚えても、本当の理解にはつながりません。
+          </p>
+          <ul className="list-disc pl-5 space-y-1.5 text-sm leading-relaxed opacity-90">
+            <li>ブラウザの向こう側で、Web技術がどう発展してきたのか</li>
+            <li>
+              画面の裏側で、コンピュータがどのようにデータを処理しているのか
+            </li>
+          </ul>
+          <p className="text-sm leading-relaxed opacity-90">
+            「なぜ動くのか」「なぜ穴が生まれるのか」という土台から紐解くことで、変化の早い現代でも応用が利く本質的な知識が身につくと考えています。
+          </p>
+        </div>
+
+        {/* CTFを通して手を動かして学ぶ */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-bold text-foreground">
+            CTFを通して、手を動かして学ぶ
+          </h3>
+          <p className="text-sm leading-relaxed opacity-90">
+            このサイトでは、主に <strong>Web</strong> と{" "}
+            <strong>Pwn（低レイヤ・バイナリ）</strong>の分野を扱っています。
+            <br />
+            いきなり難しい専門用語に圧倒されることなく、実際に問題を解きながら、システムの裏側を見る面白さを体験しましょう。
+          </p>
+          <p className="text-sm leading-relaxed opacity-90">
+            公開している解説記事やスライド資料が、セキュリティやコンピュータの仕組みに興味を持つ方の最初の一歩になれば幸いです。
+          </p>
+        </div>
+
+        {/* 運営と更新について */}
+        <div className="pt-2">
+          <h2 className="text-2xl font-bold mb-4 text-foreground tracking-tight border-t border-border/60 pt-8">
+            運営と更新について
+          </h2>
+          <div className="space-y-4 text-sm leading-relaxed opacity-90">
+            <p>
+              当サイトのコンテンツは、私自身が学びながら自分の言葉で整理・記録している学習ノートでもあります。
+              そのため、至らない点や根拠の不足、誤った情報が含まれてしまうことがあるかもしれません。もしお気づきの点がありましたら、優しくご指摘いただけますと大変助かります。
+            </p>
+            <p>
+              また、技術仕様や仕組みを理解する上で、様々な書籍や先人の知見を参考にしています。そのため、既存の解説や書籍と説明の流れ・言い回しが似通ってしまう場合がございます。何卒、ご了承願います。
+            </p>
+            <p>
+              そして、コンテンツの追加は私の学習進度に合わせて少しずつ行っていくため、更新はスローペースになる予定です。もし更新に追いついてしまった場合は、ぜひ一緒に手を動かしながら、同じ学習の仲間として勉強していきましょう。
+            </p>
+          </div>
+        </div>
+      </section>
+
       <p className="text-sm leading-relaxed mb-8 opacity-90">
-        本サイトは、各種ファイルを共有・閲覧管理するためのプラットフォームです．
         利用にあたっては、以下のガイドラインおよび免責事項を必ずご確認ください．
       </p>
 

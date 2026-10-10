@@ -9,19 +9,16 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm opacity-70">
-            &copy; {currentYear} Site Administrator. All rights reserved.
+            &copy; {currentYear} nikodehyakuen All rights reserved
           </p>
 
-          <div className="flex text-sm opacity-70 divide-x divide-border">
-            <Link
-              href="/"
-              className="hover:opacity-100 transition-opacity pr-5"
-            >
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm opacity-70">
+            <Link href="/" className="hover:opacity-100 transition-opacity">
               Home
             </Link>
             <Link
               href="/about"
-              className="hover:opacity-100 transition-opacity px-5"
+              className="hover:opacity-100 transition-opacity"
             >
               About
             </Link>
@@ -29,17 +26,25 @@ export default function Footer() {
               href="/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-100 transition-opacity px-5"
+              className="hover:opacity-100 transition-opacity"
             >
               Contact
             </a>
             <a
-              href="https://github.com/suikamin/ctfgonet"
+              href="https://github.com/suikamin/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-100 transition-opacity pl-5"
+              className="hover:opacity-100 transition-opacity"
             >
               GitHub
+            </a>
+            <a
+              href="https://bsky.app/profile/nikodehyakuen.bsky.social"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-100 transition-opacity"
+            >
+              Bluesky
             </a>
           </div>
         </div>
