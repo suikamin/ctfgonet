@@ -14,22 +14,23 @@ import { getUpdates } from "./lib/updates";
 import VulnerabilityShowcase from "./components/VulnerabilityShowcase";
 
 export const metadata: Metadata = {
-  title: "CTFで学ぶ情報セキュリティ | ctfgo.net",
+  title: "CTFで学ぶ情報セキュリティ | ctfdemanabu",
   description:
-    "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ解説記事と資料ダウンロードプラットフォーム",
+    "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ",
   keywords: [
-    "ctfgo",
-    "ctfgo.net",
     "ctf",
     "web",
     "pwn",
     "セキュリティ",
     "CTFで学ぶ",
+    "ctfgo",
+    "ctfgo.net",
+    "ctfdemanabu"
   ],
   openGraph: {
-    title: "CTFで学ぶセキュリティ | ctfgo.net",
+    title: "CTFで学ぶセキュリティ | ctfdemanabu",
     description:
-      "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ解説記事と資料ダウンロード",
+      "CTFを通してWebの起源からモダン開発、コンピュータの仕組み、現代の情報セキュリティを学ぶ",
     type: "website",
   },
 };
@@ -95,7 +96,7 @@ export default async function HomePage() {
           {/* メインCTAエリア */}
           <div className="pt-2 flex flex-wrap items-center justify-start gap-3 sm:gap-4 w-full sm:w-auto">
             <Link
-              href="https://docs.ctfgo.net"
+              href="https://docs.ctfdemanabu.com"
               className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base lg:text-lg font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
               さぁ、始めよう
@@ -111,7 +112,7 @@ export default async function HomePage() {
                 <Folder className="w-5 h-5 lg:w-6 lg:h-6" />
               </Link>
               <Link
-                href="https://blog.ctfgo.net"
+                href="https://blog.ctfdemanabu.com"
                 title="記事を読む (Blog)"
                 aria-label="記事を読む"
                 className="inline-flex items-center justify-center h-[48px] w-[48px] sm:h-[52px] sm:w-[52px] lg:h-[60px] lg:w-[60px] bg-background/80 hover:bg-foreground/10 text-foreground/85 hover:text-foreground border border-border backdrop-blur-md rounded-xl shadow-sm transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 shrink-0"

@@ -1,10 +1,17 @@
 [
   {
+    "id": "update-2026-10-12-01",
+    "date": "2026-10-12",
+    "category": "お知らせ",
+    "title": "ドメインを変更しました",
+    "url": "https://ctfdemanabu.com"
+  },
+  {
     "id": "update-2026-10-11-01",
     "date": "2026-10-11",
     "category": "機能追加",
     "title": "ドキュメントをリリースしました",
-    "url": "https://docs.ctfgo.net"
+    "url": "https://docs.ctfdemanabu.com"
   },
   {
     "id": "update-2026-10-10-01",
@@ -35,4 +42,3 @@
     "url": "/about"
   }
 ]
-

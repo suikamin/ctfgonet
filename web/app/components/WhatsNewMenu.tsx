@@ -59,7 +59,7 @@ export function WhatsNewMenu({ items = [] }: { items?: UpdateItem[] }) {
             </span>
           )}
         </div>
-        <ul className="max-h-80 overflow-y-auto divide-y divide-border text-sm">
+        <ul className="max-h-80 overflow-y-auto divide-y divide-border text-sm no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {items.length === 0 ? (
             <li className="p-4 text-center text-xs text-foreground/60">
               現在お知らせはありません

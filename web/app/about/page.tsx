@@ -17,7 +17,7 @@ export default function About() {
 
         {/* 運営と更新について */}
         <div className="pt-2">
-          <h2 className="text-2xl font-bold mb-4 text-foreground tracking-tight border-t border-border/60 pt-8">
+          <h2 className="text-2xl font-bold mb-4 text-foreground tracking-tight">
             運営と更新について
           </h2>
           <div className="space-y-4 text-sm leading-relaxed opacity-90">

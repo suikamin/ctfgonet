@@ -26,3 +26,12 @@
 body {
   @apply bg-background text-foreground;
 }
+
+/* スクロールバー非表示ユーティリティ */
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
