@@ -40,7 +40,7 @@ export function WhatsNewMenu({ items = [] }: { items?: UpdateItem[] }) {
     <Popover onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <button
-          className="relative p-2 rounded-md hover:bg-foreground/10 text-foreground transition-colors"
+          className="relative p-2 rounded-md hover:bg-foreground/10 text-foreground transition-colors cursor-pointer"
           aria-label="更新履歴・お知らせ"
           title="更新履歴・お知らせ"
         >
