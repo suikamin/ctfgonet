@@ -1,5 +1,12 @@
 [
   {
+    "id": "update-2026-10-11-01",
+    "date": "2026-10-11",
+    "category": "機能追加",
+    "title": "ドキュメントをリリースしました",
+    "url": "https://docs.ctfgo.net"
+  },
+  {
     "id": "update-2026-10-10-01",
     "date": "2026-10-10",
     "category": "改善",

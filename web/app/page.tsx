@@ -4,7 +4,11 @@ import { Metadata } from "next";
 import {
   ShieldAlert,
   Folder,
-  Newspaper
+  Newspaper,
+  Layers,
+  Terminal,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { getUpdates } from "./lib/updates";
 import VulnerabilityShowcase from "./components/VulnerabilityShowcase";
@@ -91,7 +95,7 @@ export default async function HomePage() {
           {/* メインCTAエリア */}
           <div className="pt-2 flex flex-wrap items-center justify-start gap-3 sm:gap-4 w-full sm:w-auto">
             <Link
-              href="https://blog.ctfgo.net"
+              href="https://docs.ctfgo.net"
               className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-7 sm:py-4 text-sm sm:text-base lg:text-lg font-bold bg-foreground text-background hover:opacity-90 rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2"
             >
               さぁ、始めよう
@@ -121,9 +125,9 @@ export default async function HomePage() {
 
       {/* 2. Reality Check セクション */}
       <section className="flex flex-col items-center justify-center px-4">
-        <div className="w-full max-w-4xl space-y-10 text-center">
+        <div className="w-full max-w-4xl space-y-12 sm:space-y-16">
           {/* 見出しブロック */}
-          <div className="space-y-4">
+          <div className="space-y-4 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold tracking-wider uppercase rounded-full bg-red-500/10 text-red-500 border border-red-500/20">
               <ShieldAlert className="w-4 h-4" />
               Reality Check
@@ -132,7 +136,7 @@ export default async function HomePage() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground leading-[1.3]">
               あなたは本当に、
               <br className="sm:hidden" />
-              <span className="text-blue-800 bg-clip-text">
+              <span className="inline-block bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 dark:from-blue-400 dark:via-indigo-300 dark:to-sky-400 bg-clip-text text-transparent px-1">
                 情報セキュリティ
               </span>
               を理解していますか？
@@ -141,6 +145,110 @@ export default async function HomePage() {
 
           <VulnerabilityShowcase />
 
+          {/* プラットフォームの目指すもの（メッセージカード） */}
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-foreground/[0.04] via-background to-foreground/[0.02] p-6 sm:p-8 md:p-10 shadow-sm">
+            <div className="relative z-10 space-y-3">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-full bg-foreground/10 text-foreground/80 border border-border">
+                <Sparkles className="w-3.5 h-3.5 text-sky-500" />
+                Our Concept
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-foreground leading-snug">
+                「コンピュータ・Webはどうやって生まれ、コンピュータは裏側でどう動いているのか」
+              </h3>
+              <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-3xl pt-1">
+                <strong className="text-foreground font-bold">ctfgo.net</strong>{" "}
+                は、CTF（Capture The
+                Flag）の実践を通して、現代に必要な情報セキュリティの基礎を根本から学ぶための学習アーカイブです。
+              </p>
+            </div>
+          </div>
+
+          {/* 2つの柱（仕組みの理解 & 実践） */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* 1. 表面的な知識ではなく仕組みから理解する */}
+            <div className="flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-background border border-border shadow-sm hover:border-foreground/20 transition-colors">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-500/20">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+                    表面的な知識ではなく、「仕組み」から理解する
+                  </h3>
+                  <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed mt-2">
+                    セキュリティの脆弱性を学ぶとき、ツールの使い方や表面的な対策手順だけを覚えても、本当の理解にはつながりません。
+                  </p>
+                </div>
+
+                <div className="space-y-2.5 pt-1">
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-foreground/[0.03] border border-border/70">
+                    <div className="w-1.5 h-1.5 rounded-full bg-sky-500 mt-2 shrink-0" />
+                    <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed">
+                      ブラウザの向こう側で、Web技術がどう発展してきたのか
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-foreground/[0.03] border border-border/70">
+                    <div className="w-1.5 h-1.5 rounded-full bg-sky-500 mt-2 shrink-0" />
+                    <p className="text-xs sm:text-sm text-foreground/85 leading-relaxed">
+                      画面の裏側で、コンピュータがどのようにデータを処理しているのか
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-5 mt-5 border-t border-border/70">
+                <p className="text-xs sm:text-sm text-foreground/70 leading-relaxed">
+                  「なぜ動くのか」「なぜ穴が生まれるのか」という土台から紐解くことで、変化の早い現代でも応用が利く本質的な知識が身につくと考えています。
+                </p>
+              </div>
+            </div>
+
+            {/* 2. CTFを通して手を動かして学ぶ */}
+            <div className="flex flex-col justify-between p-6 sm:p-8 rounded-3xl bg-background border border-border shadow-sm hover:border-foreground/20 transition-colors">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+                  <Terminal className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+                    CTFを通して、手を動かして学ぶ
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 mt-2.5">
+                    <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                      Web
+                    </span>
+                    <span className="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                      Pwn（低レイヤ・バイナリ）
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-foreground/75 leading-relaxed mt-3">
+                    いきなり難しい専門用語に圧倒されることなく、実際に問題を解きながら、システムの裏側を見る面白さを体験しましょう。
+                  </p>
+                  <p className="text-xs sm:text-sm text-foreground/70 leading-relaxed mt-2.5">
+                    公開している解説記事やスライド資料が、セキュリティやコンピュータの仕組みに興味を持つ方の最初の一歩になれば幸いです。
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-5 mt-5 border-t border-border/70 flex flex-wrap items-center gap-3">
+                <Link
+                  href="https://blog.ctfgo.net"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-foreground hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+                >
+                  記事を読む (Docs)
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <span className="text-foreground/30">•</span>
+                <Link
+                  href="/files?search="
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-foreground/70 hover:text-foreground transition-colors"
+                >
+                  資料を探す
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
