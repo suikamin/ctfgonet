@@ -19,7 +19,7 @@ export default async function Header() {
         {/* ナビゲーションリンク (PC/タブレット用) */}
         <nav className="hidden sm:flex items-center gap-4 text-sm font-medium">
           <Link
-            href="https://docs.ctfgo.net"
+            href="https://docs.ctfdemanabu.com"
             className="text-foreground/70 hover:text-foreground transition-colors"
           >
             Docs
@@ -31,7 +31,7 @@ export default async function Header() {
             Files
           </Link>
           <Link
-            href="https://blog.ctfgo.net"
+            href="https://blog.ctfdemanabu.com"
             className="text-foreground/70 hover:text-foreground transition-colors"
           >
             Blog
