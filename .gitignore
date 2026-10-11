@@ -32,3 +32,6 @@ uploads/
 *.zip
 
 .venv
+
+# TypeScript ビルドキャッシュ
+*.tsbuildinfo
