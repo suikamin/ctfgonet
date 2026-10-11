@@ -13,7 +13,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-md hover:bg-foreground/10 transition-colors text-foreground"
+      className="p-2 rounded-md hover:bg-foreground/10 transition-colors text-foreground cursor-pointer"
       aria-label="テーマ切り替え"
       title={theme === "dark" ? "ライトモードに切り替え" : "ダークモードに切り替え"}
     >
