@@ -10,7 +10,7 @@ export function MobileNav() {
 
   const links = [
     {
-      href: "https://docs.ctfdemanabu.net",
+      href: "https://docs.ctfdemanabu.com",
       label: "Docs",
       icon: BookOpen,
       external: true,
@@ -22,7 +22,7 @@ export function MobileNav() {
       external: false,
     },
     {
-      href: "https://blog.ctfdemanabu.net",
+      href: "https://blog.ctfdemanabu.com",
       label: "Blog",
       icon: Newspaper,
       external: true,
