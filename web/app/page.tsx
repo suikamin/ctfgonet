@@ -157,9 +157,9 @@ export default async function HomePage() {
                 「コンピュータ・Webはどうやって生まれ、コンピュータは裏側でどう動いているのか」
               </h3>
               <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-3xl pt-1">
-                <strong className="text-foreground font-bold">ctfgo.net</strong>{" "}
+                <strong className="text-foreground font-bold">CTFで学ぶ</strong>{" "}
                 は、CTF（Capture The
-                Flag）の実践を通して、現代に必要な情報セキュリティの基礎を根本から学ぶための学習アーカイブです。
+                Flag）の実践を通して、現代に必要な情報セキュリティの基礎を根本から学ぶための学習ポータルです。
               </p>
             </div>
           </div>
