@@ -1,7 +1,22 @@
 // components/FileModal.tsx
 "use client";
 
-import { X, Download, FileText, Calendar, Tag, HardDrive, KeyRound, LockKeyholeOpen, LockKeyhole, Code, MessageSquare} from "lucide-react";
+import { useState } from "react";
+import {
+  X,
+  Download,
+  FileText,
+  Calendar,
+  Tag,
+  HardDrive,
+  KeyRound,
+  LockKeyholeOpen,
+  LockKeyhole,
+  Code,
+  MessageSquare,
+  Share2,
+  Check,
+} from "lucide-react";
 
 
 interface Document {
@@ -20,7 +35,36 @@ interface FileModalProps {
 }
 
 export default function FileModal({ doc, onClose }: FileModalProps) {
+  const [copied, setCopied] = useState(false);
+
   if (!doc) return null;
+
+  const handleShare = async () => {
+    const pathname = window.location.pathname.includes("/files")
+      ? window.location.pathname
+      : "/files";
+    const url = `${window.location.origin}${pathname}?search=${encodeURIComponent(doc.uuid)}`;
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = url;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy share URL:", err);
+    }
+  };
 
   const handleDownload = async () => {
     let password = "";
@@ -111,9 +155,24 @@ export default function FileModal({ doc, onClose }: FileModalProps) {
 
         {/* メタデータ領域 */}
         <div className="space-y-3">
-          <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wider flex items-center gap-1.5">
-            <HardDrive size={13} /> メタデータ詳細
-          </h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wider flex items-center gap-1.5">
+              <HardDrive size={13} /> メタデータ詳細
+            </h3>
+            <button
+              type="button"
+              onClick={handleShare}
+              title={copied ? "コピーしました" : "共有リンクをコピー"}
+              aria-label="共有リンクをコピー"
+              className="p-1 rounded opacity-60 hover:opacity-100 hover:bg-foreground/10 transition-colors cursor-pointer"
+            >
+              {copied ? (
+                <Check size={14} className="text-emerald-500" />
+              ) : (
+                <Share2 size={14} />
+              )}
+            </button>
+          </div>
 
           <div className="bg-foreground/5 border border-border p-3.5 rounded-xl space-y-3 font-mono text-xs">
             {/* UUID */}
